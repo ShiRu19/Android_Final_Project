@@ -18,3 +18,11 @@
 - 國立臺北科技大學　資財四甲　許景雲
 - 國立臺北科技大學　資工二　　[黃漢軒](https://ntut-xuan.github.io)
 
+
+
+## ChangeLog
+
+- 2022 / 05 / 09
+  - 將 API 系統建置完成 (By Xuan)
+- 2022 / 05 / 20
+  - 完成了 Bottom Navigation 的建置 (By Xuan)
