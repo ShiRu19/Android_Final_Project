@@ -4,4 +4,8 @@
     <string name="school_bottom_navigation_text">全校</string>
     <string name="course_bottom_navigation_text">班級</string>
     <string name="setting_bottom_navigation_text">設定</string>
+    <string name="hello_text">校園通報系統 v0.01</string>
+    <string name="hello_page_icon">hello page icon</string>
+    <string name="login_title">登入</string>
+    <string name="login_via_google"> 由 Google 登入（組織帳號） </string>
 </resources>

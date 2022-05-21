@@ -23,6 +23,8 @@
 ## ChangeLog
 
 - 2022 / 05 / 09
-  - 將 API 系統建置完成 (By Xuan)
+  - 將 API 系統建置完成 (Xuan)
 - 2022 / 05 / 20
-  - 完成了 Bottom Navigation 的建置 (By Xuan)
+  - 完成了 Bottom Navigation 的建置 (Xuan)
+- 2022 / 05 / 22
+  - 完成了 Google OAuth 登入的建置 (Xuan)
