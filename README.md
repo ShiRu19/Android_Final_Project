@@ -24,7 +24,14 @@
 
 - 2022 / 05 / 09
   - 將 API 系統建置完成 (Xuan)
+
 - 2022 / 05 / 20
   - 完成了 Bottom Navigation 的建置 (Xuan)
+
 - 2022 / 05 / 22
-  - 完成了 Google OAuth 登入的建置 (Xuan)
+  - 完成了 APP 起始封面建置 (Xuan)
+  - ~~完成了 Google OAuth 登入的建置 (Xuan)~~（**停止支援了，所以拋棄該方法**）
+  - 完成校園入口網站登入 Web Data API，可以藉由 POST 帳號與密碼得到信箱、身份與名稱 (Xuan)
+  - 校園入口網站登入 Web Data API 建置到 Cloud Run 上 (Xuan)
+
+  
