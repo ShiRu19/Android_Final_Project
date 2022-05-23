@@ -38,5 +38,6 @@
   - 新增了精美的 [Alert](https://github.com/Tapadoo/Alerter) (Xuan)
   - 完成手機上的登入建置 (Xuan)
   - 撰寫好 remember me (Xuan)
+  - 完成初步的學生端通報 UI 設計 (ShiRu)
   
 
