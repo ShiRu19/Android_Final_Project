@@ -1,4 +1,4 @@
-package t4.sers;
+package t4.sers.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.FileInputStream;
+
+import t4.sers.R;
 
 public class LobbyActivity extends Activity {
 
@@ -21,7 +23,7 @@ public class LobbyActivity extends Activity {
 
         System.out.println(intent.getStringExtra("idToken"));
 
-        Toast toast = Toast.makeText(this, "Hello, " + intent.getStringExtra("displayName") + "!", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this, "Hello, " + intent.getStringExtra("studentName") + "!", Toast.LENGTH_LONG);
         toast.show();
 
     }

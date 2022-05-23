@@ -8,5 +8,10 @@
     <string name="hello_text">校園通報系統 v0.01</string>
     <string name="hello_page_icon">hello page icon</string>
     <string name="login_title">登入</string>
+    <string name="login_studentID">學號</string>
+    <string name="login_password">密碼</string>
+    <string name="login_readme">記得我</string>
+    <string name="login_login_button">登入</string>
     <string name="login_via_google"> 由 Google 登入（組織帳號） </string>
+    <string name="login_post_URL"> https://sers-backend-xyvgk4v6da-de.a.run.app/login?username=%s&amp;password=%s </string>
 </resources>

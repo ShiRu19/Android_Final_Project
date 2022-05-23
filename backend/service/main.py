@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 @app.route("/login", methods=["POST"])
 def loginNTUT():
-    username = request.json["username"]
-    password = request.json["password"]
+    username = request.args["username"]
+    password = request.args["password"]
     host = "https://app.ntut.edu.tw/"
     login_url = host + "login.do"
     data = {"muid": username, "mpassword": password, "forceMobile": "app", "md5Code": "1111", "ssoId": ""}

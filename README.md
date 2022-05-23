@@ -34,4 +34,8 @@
   - 完成校園入口網站登入 Web Data API，可以藉由 POST 帳號與密碼得到信箱、身份與名稱 (Xuan)
   - 校園入口網站登入 Web Data API 建置到 Cloud Run 上 (Xuan)
 
+- 2022 / 05 / 23
+
+  - 完成手機上的登入建置 (Xuan)
+
   
