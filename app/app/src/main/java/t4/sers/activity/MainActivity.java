@@ -1,10 +1,12 @@
 package t4.sers.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +27,9 @@ import t4.sers.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    Handler mHandler = new Handler(Looper.getMainLooper());
     ExecutorService mExecutor = Executors.newSingleThreadExecutor();
+    SharedPreferences loginPreference;
+    SharedPreferences.Editor loginPreferenceEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +38,21 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_hello);
 
+        loginPreference = getSharedPreferences("loginPref", MODE_PRIVATE);
+        loginPreferenceEditor = loginPreference.edit();
+
         new Handler().postDelayed(() -> {
+
             setContentView(R.layout.activity_login);
+
+            if(loginPreference.getBoolean("rememberMe", false)){
+                String username = loginPreference.getString("username", "");
+                String password = loginPreference.getString("password", "");
+                ((EditText) findViewById(R.id.editTextAccount)).setText(username);
+                ((EditText) findViewById(R.id.editTextTextPassword)).setText(password);
+                ((CheckBox) findViewById(R.id.login_rememberme)).setChecked(true);
+            }
+
             Alerter.create(MainActivity.this)
                     .setTitle("請先登入！")
                     .setBackgroundColorRes(R.color.orange_500)
@@ -49,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     public void loginOnClick(View view){
         String studentID = ((EditText) findViewById(R.id.editTextAccount)).getText().toString();
         String password = ((EditText) findViewById(R.id.editTextTextPassword)).getText().toString();
+        boolean rememberMe = ((CheckBox) findViewById(R.id.login_rememberme)).isChecked();
+        boolean loginSuccess = false;
         Alerter.create(MainActivity.this)
                 .setTitle("登入中")
                 .setText("請稍後...")
@@ -65,10 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     JsonObject jsonObject = element.getAsJsonObject();
                     String status = jsonObject.get("status").getAsString();
                     if(status.equalsIgnoreCase("ok")){
-                        Alerter.create(MainActivity.this)
-                                .setBackgroundColorRes(R.color.green_500)
-                                .setTitle("登入成功！")
-                                .show();
+
                         Intent intent = new Intent(MainActivity.this, LobbyActivity.class);
                         JsonObject data = jsonObject.get("data").getAsJsonObject();
                         String name = data.get("studentName").getAsString();
@@ -77,6 +92,14 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("studentName", name);
                         intent.putExtra("studentEmail", email);
                         intent.putExtra("studentRole", role);
+
+                        if(rememberMe){
+                            loginPreferenceEditor = loginPreferenceEditor.putBoolean("rememberMe", true);
+                            loginPreferenceEditor = loginPreferenceEditor.putString("username", studentID);
+                            loginPreferenceEditor = loginPreferenceEditor.putString("password", password);
+                            loginPreferenceEditor.commit();
+                        }
+
                         startActivity(intent);
                         finish();
                     }else{
@@ -91,11 +114,5 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mExecutor.execute(runnable);
-    }
-
-    private void wentLobby(){
-        Intent intent = new Intent(MainActivity.this, LobbyActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

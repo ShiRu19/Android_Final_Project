@@ -35,7 +35,8 @@
   - 校園入口網站登入 Web Data API 建置到 Cloud Run 上 (Xuan)
 
 - 2022 / 05 / 23
-
+  - 新增了精美的 [Alert](https://github.com/Tapadoo/Alerter) (Xuan)
   - 完成手機上的登入建置 (Xuan)
-
+  - 撰寫好 remember me (Xuan)
   
+
