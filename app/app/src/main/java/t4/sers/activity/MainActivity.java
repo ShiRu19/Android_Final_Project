@@ -1,13 +1,17 @@
 package t4.sers.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +23,10 @@ import com.tapadoo.alerter.Alerter;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -31,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences loginPreference;
     SharedPreferences.Editor loginPreferenceEditor;
 
+    private static Context context;
+
+    public static Context getContext(){
+        return context;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -38,10 +51,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_hello);
 
+        context = getContext();
+
         loginPreference = getSharedPreferences("loginPref", MODE_PRIVATE);
         loginPreferenceEditor = loginPreference.edit();
 
         new Handler().postDelayed(() -> {
+
+            getSupportActionBar().show();
 
             setContentView(R.layout.activity_login);
 
@@ -73,8 +90,9 @@ public class MainActivity extends AppCompatActivity {
                 .show();
         Runnable runnable = () -> {
             try{
-                String postURL = getString(R.string.login_post_URL);
-                Connection.Response response = Jsoup.connect(String.format(postURL, studentID, password))
+                String loginPostURL = getString(R.string.login_post_URL);
+                String photoPostURL = getString(R.string.photo_post_URL);
+                Connection.Response response = Jsoup.connect(String.format(loginPostURL, studentID, password))
                         .ignoreContentType(true)
                         .method(Connection.Method.POST)
                         .execute();
@@ -89,9 +107,29 @@ public class MainActivity extends AppCompatActivity {
                         String name = data.get("studentName").getAsString();
                         String email = data.get("studentEmail").getAsString();
                         String role = data.get("studentRole").getAsString();
+                        String userPhoto = data.get("userPhoto").getAsString();
+
                         intent.putExtra("studentName", name);
                         intent.putExtra("studentEmail", email);
                         intent.putExtra("studentRole", role);
+
+                        if(!userPhoto.equals("")) {
+                            response = Jsoup.connect(String.format(photoPostURL, studentID, password, userPhoto))
+                                    .ignoreContentType(true)
+                                    .method(Connection.Method.POST)
+                                    .execute();
+
+                            byte[] blob = response.bodyAsBytes();
+
+                            File temp = new File(getCacheDir(), "tempBMP.jpg");
+                            FileOutputStream outStream = new FileOutputStream(temp);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(blob, 0, blob.length);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 75, outStream);
+                            outStream.close();
+                            intent.putExtra("imageURI", temp.getAbsolutePath());
+                        }else{
+                            intent.putExtra("imageURI", "");
+                        }
 
                         if(rememberMe){
                             loginPreferenceEditor = loginPreferenceEditor.putBoolean("rememberMe", true);
