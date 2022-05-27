@@ -1,20 +1,18 @@
 package t4.sers.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import t4.sers.R;
 import t4.sers.databinding.FragmentSettingBinding;
 import t4.sers.placeholder.PlaceholderContent.PlaceholderItem;
 
@@ -24,19 +22,24 @@ import t4.sers.placeholder.PlaceholderContent.PlaceholderItem;
  */
 public class SettingFragmentRecyclerViewAdapter extends RecyclerView.Adapter<SettingFragmentRecyclerViewAdapter.ViewHolder> {
 
+    public interface OnItemClickHandler {
+        void onItemClick(String text);
+    }
+
     private final List<PlaceholderItem> mValues;
     private final Context context;
+    private final OnItemClickHandler clickHandler;
 
-    public SettingFragmentRecyclerViewAdapter(Context context, List<PlaceholderItem> items) {
+    public SettingFragmentRecyclerViewAdapter(Context context, List<PlaceholderItem> items, OnItemClickHandler onItemClickHandler) {
         this.context = context;
         mValues = items;
+        clickHandler = onItemClickHandler;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         return new ViewHolder(FragmentSettingBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-
     }
 
     @Override
@@ -61,6 +64,11 @@ public class SettingFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Set
             super(binding.getRoot());
             mImageView = binding.imageView3;
             mContentView = binding.content;
+
+            binding.getRoot().setOnClickListener(view -> {
+                clickHandler.onItemClick(mContentView.getText().toString());
+            });
+
         }
 
         @Override

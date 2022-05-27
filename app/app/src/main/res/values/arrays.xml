@@ -1,9 +1,10 @@
 <resources>
     <string-array name="setting_text">
-        <item name="about"> 關於我們 </item>
-        <item name="logout"> 登出 </item>
+        <item name="about">@string/setting_option_about_us</item>
+        <item name="logout">@string/setting_logout_text</item>
     </string-array>
     <array name="setting_color">
+        <item>@color/red_300</item>
         <item>@color/teal_700</item>
         <item>@color/orange_300</item>
     </array>

@@ -36,10 +36,15 @@
   - 完成手機上的登入建置 (Xuan)
   - 撰寫好 remember me (Xuan)
   - 完成初步的學生端通報 UI 設計 (ShiRu)
-
 - 2022 / 05 / 24
   - 完成設定 Fragment 的設計 (Xuan)。
   - 將 API 新增了爬取圖片的功能 (Xuan)。
   - 在 Fragment 新增了切換時有向右移的 Animation (Xuan)。
+- 2022 / 05 / 27
+  - 將個人課表的 RecyclerView 完成 (Xuan)
+  - 登入的 icon 改成 Progress (Xuan)
+  - 編修了 API 的引數，改成了需要輸入帳號與密碼、欲查詢學號、學年度與學期 (Xuan)
+
+
 
 

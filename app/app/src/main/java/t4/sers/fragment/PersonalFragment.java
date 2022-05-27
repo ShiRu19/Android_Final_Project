@@ -3,12 +3,22 @@ package t4.sers.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import t4.sers.R;
+import t4.sers.adapter.CourseTableAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +33,7 @@ public class PersonalFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String courseDataJson;
     private String mParam2;
 
     public PersonalFragment() {
@@ -52,15 +62,42 @@ public class PersonalFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            courseDataJson = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_personal, container, false);
+        View view = inflater.inflate(R.layout.fragment_personal, container, false);
+        RecyclerView courseTable = view.findViewById(R.id.course_recycleview);
+        JsonArray jsonArray = JsonParser.parseString(courseDataJson).getAsJsonArray();
+
+        List<String> courseCodeList = new ArrayList<>();
+        List<String> courseNameList = new ArrayList<>();
+        List<String> courseTeacherList = new ArrayList<>();
+
+        for(int i = 0; i < jsonArray.size(); i++){
+            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+            String courseCode = jsonObject.get("courseID").getAsString();
+            String courseName = jsonObject.get("courseName").getAsString();
+            JsonArray courseTeacherArray = jsonObject.get("courseTeacher").getAsJsonArray();
+            StringBuilder courseTeacher = new StringBuilder();
+            for(int j = 0; j < courseTeacherArray.size(); j++){
+                courseTeacher.append(courseTeacherArray.get(j).getAsString());
+                if(j != courseTeacherArray.size() - 1){
+                    courseTeacher.append("\n");
+                }
+            }
+            courseCodeList.add(courseCode);
+            courseNameList.add(courseName);
+            courseTeacherList.add(courseTeacher.toString());
+        }
+
+        courseTable.setAdapter(new CourseTableAdapter(getContext(), courseCodeList, courseNameList, courseTeacherList));
+        courseTable.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        return view;
     }
 }

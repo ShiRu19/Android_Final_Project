@@ -15,9 +15,11 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.tapadoo.alerter.Alert;
 import com.tapadoo.alerter.Alerter;
 
 import org.jsoup.Connection;
@@ -84,15 +86,17 @@ public class MainActivity extends AppCompatActivity {
         String password = ((EditText) findViewById(R.id.editTextTextPassword)).getText().toString();
         boolean rememberMe = ((CheckBox) findViewById(R.id.login_rememberme)).isChecked();
         boolean loginSuccess = false;
-        Alerter.create(MainActivity.this)
+        Alert alert = Alerter.create(MainActivity.this)
                 .setTitle("登入中")
                 .setText("請稍後...")
+                .enableProgress(true)
+                .disableOutsideTouch()
                 .show();
         Runnable runnable = () -> {
             try{
                 String loginPostURL = getString(R.string.login_post_URL);
                 String photoPostURL = getString(R.string.photo_post_URL);
-                Connection.Response response = Jsoup.connect(String.format(loginPostURL, studentID, password))
+                Connection.Response response = Jsoup.connect(String.format(loginPostURL, studentID, password, 110, 2))
                         .ignoreContentType(true)
                         .method(Connection.Method.POST)
                         .execute();
@@ -108,10 +112,13 @@ public class MainActivity extends AppCompatActivity {
                         String email = data.get("studentEmail").getAsString();
                         String role = data.get("studentRole").getAsString();
                         String userPhoto = data.get("userPhoto").getAsString();
+                        JsonObject studentCourseObject = data.get("studentCourse").getAsJsonObject();
+                        JsonArray studentCourseArray = studentCourseObject.get("data").getAsJsonArray();
 
                         intent.putExtra("studentName", name);
                         intent.putExtra("studentEmail", email);
                         intent.putExtra("studentRole", role);
+                        intent.putExtra("studentCourse", studentCourseArray.toString());
 
                         if(!userPhoto.equals("")) {
                             response = Jsoup.connect(String.format(photoPostURL, studentID, password, userPhoto))

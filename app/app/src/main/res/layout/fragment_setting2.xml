@@ -8,7 +8,6 @@
     tools:context=".fragment.SettingFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
-        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         android:id="@+id/setting_iv"
         android:layout_width="128dp"
         android:layout_height="128dp"
@@ -17,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
     <TextView
         android:id="@+id/setting_name_textview"
@@ -35,10 +35,23 @@
         android:id="@+id/setting_rv"
         android:layout_width="409dp"
         android:layout_height="522dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setting_name_textview"
+        app:layout_constraintTop_toBottomOf="@+id/setting_email_textview"
         tools:listitem="@layout/fragment_setting" />
+
+    <TextView
+        android:id="@+id/setting_email_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="2dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/setting_rv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_name_textview" />
 </androidx.constraintlayout.widget.ConstraintLayout>

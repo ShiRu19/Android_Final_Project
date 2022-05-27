@@ -1,4 +1,5 @@
 from flask import Flask, request, Response
+import CourseAPI
 import requests
 import json
 import os
@@ -35,9 +36,17 @@ def loginNTUT():
         filename = request.args["filename"]
         res = requests.post(photo_url, data={"realname": filename}, headers=header, cookies=res.cookies, stream=True)
         return Response(res.raw, mimetype="image/jpeg")
+    
+    if "year" in request.args and "sem" in request.args:
+        year = request.args["year"]
+        sem = request.args["sem"]
+        response_data["data"]["studentCourse"] = CourseAPI.fetchCourseData(username, password, username, year, sem)
 
     return Response(json.dumps(response_data), mimetype="application/json")
 
+@app.route("/confirmReport", methods=["POST"])
+def confirmReport():
+    pass
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

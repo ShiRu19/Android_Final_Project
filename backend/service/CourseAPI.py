@@ -1,6 +1,7 @@
 import requests
 import datetime
 from bs4 import BeautifulSoup
+import traceback
 
 def fetchCourseData(username, password, studentID, year, sem):
 
@@ -40,10 +41,8 @@ def fetchCourseData(username, password, studentID, year, sem):
 
         print(soup.prettify())
 
-        course_list = {}
+        course_list = []
         table = soup.html.find_all("table")[1].findChildren("tr")
-
-        print(course_list.keys())
 
         for i in range(3, len(table)-1):
             tag = [7, 1, 2, 3, 4, 5, 6]
@@ -52,18 +51,15 @@ def fetchCourseData(username, password, studentID, year, sem):
             courseTeacher = [data.contents[0] for data in table[i].findChildren("td")[6].findChildren("a")]
             courseClass = [data.contents[0] for data in table[i].findChildren("td")[7].findChildren("a")]
             courseClassRoom = [data.contents[0] for data in table[i].findChildren("td")[15].findChildren("a")]
-            course_list[courseCode] = {"courseName": courseName, "courseTeacher": courseTeacher, "courseClass": courseClass, "courseClassroom": courseClassRoom, "courseTime": []}
+            course_list.append({"courseID": courseCode, "courseName": courseName, "courseTeacher": courseTeacher, "courseClass": courseClass, "courseClassroom": courseClassRoom, "courseTime": []})
             for j in range(7):
                 classTime = table[i].findChildren("td")[8 + j].contents[0].strip()
                 if len(classTime) > 0:
                     classTimeSplit = classTime.split()
                     for data in classTimeSplit:
-                        course_list[courseCode]["courseTime"].append(str(tag[j]) + "-" + data)
-
-        for data in course_list:
-            print(data, course_list[data])
+                        course_list[len(course_list)-1]["courseTime"].append(str(tag[j]) + "-" + data)
 
         return {"status": "OK", "data": course_list}
 
     except Exception as e:
-        return {"status": "Error", "Message": str(e)}
+        return {"status": "Error", "Message": traceback.format_exc()}
