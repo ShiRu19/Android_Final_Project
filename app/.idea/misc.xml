@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/drawable-anydpi/ic_notification_calendar.xml" value="0.1" />
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/drawable-xxhdpi/ic_notification_calendar.xml" value="0.176" />
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/drawable/ic_baseline_build_24.xml" value="0.176" />
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/layout/activity_hello.xml" value="0.15729166666666666" />
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/layout/activity_login.xml" value="0.19375" />
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/layout/activity_main.xml" value="0.19202898550724637" />
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/layout/activity_student_notification.xml" value="0.264" />
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/layout/course_table_holder.xml" value="0.25364583333333335" />
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/layout/fragment_debug.xml" value="0.20416666666666666" />
+        <entry key="..\:/NTUT/110-2/Android_Project/Android_Final_Project/app/app/src/main/res/menu/lobby_menu.xml" value="0.19375" />
         <entry key="..\:/Users/sigtu/Desktop/Android_Final_Project/app/app/src/main/res/drawable-v23/personal_touch_border.xml" value="0.2245" />
         <entry key="..\:/Users/sigtu/Desktop/Android_Final_Project/app/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1375" />
         <entry key="..\:/Users/sigtu/Desktop/Android_Final_Project/app/app/src/main/res/drawable/border.xml" value="0.136" />

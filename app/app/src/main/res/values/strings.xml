@@ -28,5 +28,10 @@
     <string name="photo_post_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/login?username=%s&amp;password=%s&amp;filename=%s </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="notification_rapidAntigenTest_date">快篩陽性日期</string>
+    <string name="notification_rapidAntigenTest_certificate">快篩陽性證明</string>
+    <string name="notification_dateHint">yyyy/mm/dd</string>
+    <string name="notification_rapidAntigenTest_certificate_hint">請確實拍攝陽性快篩試劑</string>
+    <string name="notification_delete">刪除</string>
 
 </resources>

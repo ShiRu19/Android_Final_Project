@@ -20,6 +20,9 @@
         <activity android:name=".activity.LobbyActivity"
             android:label = "Lobby Activity">
         </activity>
+        <activity android:name=".activity.StudentNotificationActivity"
+            android:label = "Student Notification Activity">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
