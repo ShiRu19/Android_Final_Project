@@ -1,12 +1,5 @@
 <resources>
-<<<<<<< HEAD
     <string name="app_name">北科社交距離</string>
-=======
-    <string name="app_name">校園通報系統</string>
-<<<<<<< HEAD
->>>>>>> 4e60930e0b6d037b11debab1f36a10f4fb607360
-=======
->>>>>>> 4e60930e0b6d037b11debab1f36a10f4fb607360
 
     <string name="person_bottom_navigation_text">個人</string>
     <string name="school_bottom_navigation_text">全校</string>

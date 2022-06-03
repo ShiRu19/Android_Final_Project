@@ -46,19 +46,9 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.15.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-<<<<<<< HEAD
-<<<<<<< HEAD
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'com.google.firebase:firebase-auth:21.0.5'
     testImplementation 'junit:junit:4.13.2'
-=======
-    implementation 'androidx.preference:preference:1.1.1'
-    testImplementation 'junit:junit:4.12'
->>>>>>> 4e60930e0b6d037b11debab1f36a10f4fb607360
-=======
-    implementation 'androidx.preference:preference:1.1.1'
-    testImplementation 'junit:junit:4.12'
->>>>>>> 4e60930e0b6d037b11debab1f36a10f4fb607360
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }

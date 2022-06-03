@@ -5,13 +5,7 @@ import androidx.fragment.app.DialogFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 4e60930e0b6d037b11debab1f36a10f4fb607360
-=======
->>>>>>> 4e60930e0b6d037b11debab1f36a10f4fb607360
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
