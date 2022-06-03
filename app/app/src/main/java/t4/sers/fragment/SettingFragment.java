@@ -40,13 +40,11 @@ import t4.sers.placeholder.PlaceholderContent;
  */
 public class SettingFragment extends Fragment implements SettingFragmentRecyclerViewAdapter.OnItemClickHandler{
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARGS1 = "userName";
     private static final String ARGS2 = "photoPath";
     private static final String ARGS3 = "userEmail";
 
-    // TODO: Rename and change types of parameters
     private String userName;
     private String photoPath;
     private String userEmail;
@@ -62,7 +60,7 @@ public class SettingFragment extends Fragment implements SettingFragmentRecycler
      * @param param1 Parameter 1.
      * @return A new instance of fragment SettingFragment.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static SettingFragment newInstance(String param1, String param2, String param3) {
         SettingFragment fragment = new SettingFragment();
         Bundle args = new Bundle();

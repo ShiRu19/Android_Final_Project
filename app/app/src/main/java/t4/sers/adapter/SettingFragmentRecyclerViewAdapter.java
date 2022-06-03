@@ -16,10 +16,7 @@ import java.util.List;
 import t4.sers.databinding.FragmentSettingBinding;
 import t4.sers.placeholder.PlaceholderContent.PlaceholderItem;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
- * TODO: Replace the implementation with code for your data type.
- */
+
 public class SettingFragmentRecyclerViewAdapter extends RecyclerView.Adapter<SettingFragmentRecyclerViewAdapter.ViewHolder> {
 
     public interface OnItemClickHandler {

@@ -27,12 +27,10 @@ import t4.sers.adapter.CourseTableAdapter;
  */
 public class PersonalFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String courseDataJson;
     private String mParam2;
 
@@ -48,7 +46,6 @@ public class PersonalFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment PersonalFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static PersonalFragment newInstance(String param1, String param2) {
         PersonalFragment fragment = new PersonalFragment();
         Bundle args = new Bundle();

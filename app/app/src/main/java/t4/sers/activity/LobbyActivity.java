@@ -2,19 +2,17 @@ package t4.sers.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.tapadoo.alerter.Alerter;
 
 import t4.sers.R;
@@ -23,6 +21,8 @@ import t4.sers.fragment.PersonalFragment;
 import t4.sers.fragment.SettingFragment;
 
 public class LobbyActivity extends AppCompatActivity {
+
+    FirebaseFirestore firebaseFirestore;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,20 @@ public class LobbyActivity extends AppCompatActivity {
                 .setTitle("登入成功！")
                 .setText("Hello, " + intent.getStringExtra("studentName"))
                 .show();
+
+        /* 一個 Firebase 登入的範例 */
+        /* TODO: 寫一個 Util 來方便使用寫入、讀取資料的功能 */
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = firebaseFirestore.collection("app").document("version");
+        documentReference.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                DocumentSnapshot documentSnapshot = task.getResult();
+                Log.d("Firestore", "App version = " + documentSnapshot.getData());
+            }else{
+                Log.d("Firestore", "Cached get failed: ", task.getException());
+            }
+        });
+
 
         getSupportActionBar().setTitle("個人防疫資訊");
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, PersonalFragment.newInstance(studentCourse, "")).commit();

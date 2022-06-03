@@ -7,19 +7,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.tapadoo.alerter.Alert;
 import com.tapadoo.alerter.Alerter;
 
 import org.jsoup.Connection;
@@ -28,11 +28,17 @@ import org.jsoup.Jsoup;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import t4.sers.R;
+
+class AuthFailedException extends Exception{
+    public AuthFailedException(String msg){
+        super(msg);
+    }
+}
 
 public class MainActivity extends AppCompatActivity {
 
@@ -85,8 +91,7 @@ public class MainActivity extends AppCompatActivity {
         String studentID = ((EditText) findViewById(R.id.editTextAccount)).getText().toString();
         String password = ((EditText) findViewById(R.id.editTextTextPassword)).getText().toString();
         boolean rememberMe = ((CheckBox) findViewById(R.id.login_rememberme)).isChecked();
-        boolean loginSuccess = false;
-        Alert alert = Alerter.create(MainActivity.this)
+        Alerter.create(MainActivity.this)
                 .setTitle("登入中")
                 .setText("請稍後...")
                 .enableProgress(true)
@@ -112,9 +117,11 @@ public class MainActivity extends AppCompatActivity {
                         String email = data.get("studentEmail").getAsString();
                         String role = data.get("studentRole").getAsString();
                         String userPhoto = data.get("userPhoto").getAsString();
+                        String firebaseToken = data.get("firebaseToken").getAsString();
                         JsonObject studentCourseObject = data.get("studentCourse").getAsJsonObject();
                         JsonArray studentCourseArray = studentCourseObject.get("data").getAsJsonArray();
 
+                        intent.putExtra("firebaseToken", firebaseToken);
                         intent.putExtra("studentName", name);
                         intent.putExtra("studentEmail", email);
                         intent.putExtra("studentRole", role);
@@ -145,17 +152,41 @@ public class MainActivity extends AppCompatActivity {
                             loginPreferenceEditor.commit();
                         }
 
-                        startActivity(intent);
-                        finish();
-                    }else{
                         Alerter.create(MainActivity.this)
-                                .setBackgroundColorRes(R.color.red_500)
-                                .setTitle("登入失敗！")
+                                .setTitle("正在登入 Firebase...")
+                                .setText("請稍後...")
+                                .enableProgress(true)
+                                .disableOutsideTouch()
                                 .show();
+
+                        FirebaseApp.initializeApp(this);
+                        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                        firebaseAuth.signInWithCustomToken(firebaseToken).addOnCompleteListener(task -> {
+                            if(task.isSuccessful()){
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Log.w("Firebase", "signInWithCustomToken:failure", task.getException());
+                                Alerter.create(MainActivity.this)
+                                        .setBackgroundColorRes(R.color.red_500)
+                                        .setTitle("Firebase 登入失敗！")
+                                        .setText("請連繫服務供應者。")
+                                        .show();
+                            }
+                        });
+
                     }
+                } else {
+                    throw new AuthFailedException("登入失敗");
                 }
             } catch (IOException e){
                 e.printStackTrace();
+            } catch (AuthFailedException e){
+                Alerter.create(MainActivity.this)
+                        .setBackgroundColorRes(R.color.red_500)
+                        .setTitle("登入失敗！")
+                        .setText(Objects.requireNonNull(e.getMessage()))
+                        .show();
             }
         };
         mExecutor.execute(runnable);

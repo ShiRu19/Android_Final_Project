@@ -1,10 +1,14 @@
-from flask import Flask, request, Response
 import CourseAPI
 import requests
 import json
+import firebase_admin
 import os
 
+from flask import Flask, request, Response
+from firebase_admin import credentials, auth
+
 app = Flask(__name__)
+firebase_app = firebase_admin.initialize_app(credentials.Certificate("./serviceAccountKey.json"))
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -31,6 +35,7 @@ def loginNTUT():
         response_data["data"]["studentEmail"] = student_data["userMail"]
         response_data["data"]["studentRole"] = student_data["userRole"]
         response_data["data"]["userPhoto"] = student_data["userPhoto"]
+        response_data["data"]["firebaseToken"] = auth.create_custom_token(username).decode("utf-8")
 
     if "filename" in request.args:
         filename = request.args["filename"]
@@ -44,9 +49,17 @@ def loginNTUT():
 
     return Response(json.dumps(response_data), mimetype="application/json")
 
+'''
 @app.route("/confirmReport", methods=["POST"])
 def confirmReport():
-    pass
+    imageFile = request.files.get('positiveImage', '')
+    imageFile.save("./image.jpg")
+    imageFile.close()
+    print(type(imageFile))
+    print(request.form.keys())
+    response_data = {"status": "OK", "message": "OK."}
+    return Response(json.dumps(response_data), mimetype="application/json")
+'''
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
