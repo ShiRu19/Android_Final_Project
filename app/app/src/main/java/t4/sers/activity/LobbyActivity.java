@@ -102,6 +102,11 @@ public class LobbyActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        else if (id == R.id.action_other_footprints) {
+            Intent intent = new Intent(this, OtherFootprintsActivity.class);
+            startActivity(intent);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

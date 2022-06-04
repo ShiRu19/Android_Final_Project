@@ -23,6 +23,13 @@
         <activity android:name=".activity.StudentNotificationActivity"
             android:label = "Student Notification Activity">
         </activity>
+        <activity android:name=".activity.OtherFootprintsActivity"
+            android:label = "Other Footprints Activity">
+        </activity>
+        <activity android:name=".activity.AddFootprintsActivity"
+            android:label = "Add Footprints Activity">
+        </activity>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

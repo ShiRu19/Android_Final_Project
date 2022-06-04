@@ -20,6 +20,7 @@
     <string name="setting_option_logout"> 登出 </string>
 
     <string name="lobby_menu_report">確診通報</string>
+    <string name="lobby_menu_other_footprints">其他足跡</string>
     <string name="login_post_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/login?username=%s&amp;password=%s&amp;year=%d&amp;sem=%d </string>
     <string name="photo_post_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/login?username=%s&amp;password=%s&amp;filename=%s </string>
     <!-- TODO: Remove or change this placeholder text -->
