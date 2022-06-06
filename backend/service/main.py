@@ -1,3 +1,4 @@
+import mimetypes
 import CourseAPI
 import requests
 import json
@@ -9,15 +10,33 @@ from flask_session import Session
 from datetime import datetime as dt, timedelta
 from flask import Flask, request, Response, send_from_directory, session, redirect
 from firebase_admin import credentials, auth
+from firebase_admin import firestore
 import time;
 
 app = Flask(__name__, static_url_path='')
 firebase_app = firebase_admin.initialize_app(credentials.Certificate("./serviceAccountKey.json"))
+db = firestore.client(firebase_app)
 app.config['JSON_SORT_KEYS'] = False
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
 app.secret_key = os.urandom(16).hex()
 
+firebaseTokenMap = {}
+
+_verify_token_url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyCustomToken'
+
+def _sign_in(custom_token, api_key):
+    body = {'token' : custom_token.decode(), 'returnSecureToken' : True}
+    params = {'key' : api_key}
+    resp = requests.request('post', _verify_token_url, params=params, json=body)
+    resp.raise_for_status()
+    return resp.json().get('idToken')   
+
+def test_custom_token(api_key):
+    custom_token = auth.create_custom_token('user1')
+    id_token = _sign_in(custom_token, api_key)
+    claims = auth.verify_id_token(id_token)
+    assert claims['uid'] == 'user1'
 
 @app.route("/dist/<path:path>")
 def returnStaticFile(path):
@@ -49,6 +68,7 @@ def loginNTUT():
         response_data["data"]["studentRole"] = student_data["userRole"] if username not in {"109590031", "107AB0008", "107AB0018"} else "T"
         response_data["data"]["userPhoto"] = student_data["userPhoto"]
         response_data["data"]["firebaseToken"] = auth.create_custom_token(username).decode("utf-8")
+        firebaseTokenMap[username] = response_data["data"]["firebaseToken"]
         sessionID = os.urandom(16).hex()
 
     if "filename" in request.args:
@@ -93,17 +113,31 @@ def admin_index_page():
     index_html = open("./html/index.html", "r", encoding="utf8")
     return index_html.read()
 
-'''
-@app.route("/confirmReport", methods=["POST"])
-def confirmReport():
-    imageFile = request.files.get('positiveImage', '')
-    imageFile.save("./image.jpg")
-    imageFile.close()
-    print(type(imageFile))
-    print(request.form.keys())
-    response_data = {"status": "OK", "message": "OK."}
+
+@app.route("/admin_verdict", methods=["GET"])
+def admin_verdict_page():
+    if(request.cookies.get('SID') == None or request.cookies.get('SID') not in session):
+        return redirect("/admin_login")
+    
+    index_html = open("./html/verdict.html", "r", encoding="utf8")
+    return index_html.read()
+
+
+@app.route("/fetch_custom_token", methods=["POST"])
+def fetch_custom_token():
+    response_data = {"status": ""}
+    if(request.cookies.get('SID') == None or request.cookies.get('SID') not in session):
+        response_data["status"] = "Failed"
+        response_data["message"] = "驗證無效"
+        return Response(json.dumps(response_data), mimetype="application/json")
+    SID = request.cookies.get('SID')
+    username = session[SID]["username"]
+    response_data["status"] = "ok"
+    response_data["data"] = {}
+    response_data["data"]["custom_token"] = auth.create_custom_token(username).decode("utf-8")
+    print(response_data["data"]["custom_token"])
     return Response(json.dumps(response_data), mimetype="application/json")
-'''
 
 if __name__ == "__main__":
+    test_custom_token("AIzaSyBUJBnbG2uyzHtTo0gWNHuNocfUMuXqxkU")
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

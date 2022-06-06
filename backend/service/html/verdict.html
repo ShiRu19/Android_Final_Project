@@ -1,0 +1,166 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <meta charset="UTF-8">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./dist/output.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script  src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    </head>
+    <body>
+        <div class="bg-orange-300 overflow-x-hidden w-screen h-screen p-10">
+            <div class="relative rounded-md lg:w-[80%] md:w-full h-[100%] bg-white text-center mx-auto overflow-auto flex-grow">
+                <table class="w-full text-sm text-black dark:text-gray-400 text-center relative">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">#</th>
+                            <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">UUID</th>
+                            <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">回報時間</th>
+                            <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">學號</th>
+                            <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">姓名</th>
+                            <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">審核狀態</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y text-base">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script type="module">
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUJBnbG2uyzHtTo0gWNHuNocfUMuXqxkU",
+            authDomain: "t4-sers-296c0.firebaseapp.com",
+            projectId: "t4-sers-296c0",
+            storageBucket: "t4-sers-296c0.appspot.com",
+            messagingSenderId: "186579646343",
+            appId: "1:186579646343:web:52a051013da351c97e0522",
+            measurementId: "G-WG4070M7M9"
+        };
+
+        let custom_token = ""
+      
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const fetch_data = {}
+        var db = null;
+
+        $.ajax({
+            url: "fetch_custom_token",
+            type: "POST",
+            success(data){
+
+                console.log(data)
+                custom_token = data["data"]["custom_token"]
+
+                const auth = firebase.auth();
+
+                auth.signInWithCustomToken(custom_token)
+                .then((userCredential) => {
+                    // Signed in
+                    var user = userCredential.user;
+                    var db = firebase.firestore();
+                    fetchTable(db)
+                    // ...
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.log(errorMessage)
+                });
+            },
+            error(xhr, status, thrown){
+                window.location.href = "/admin_login"
+            }
+        })
+
+        function fetchTable(db){
+        
+            let count = 0
+
+            db.collection("report").orderBy("ReportTime", "asc").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    fetch_data[doc.data()["UUID"]] = doc.data()
+                    addTableRow(count+1, doc.data());
+                    count += 1;
+                });
+            });
+
+        }
+
+        function addTableRow(index, data){
+            let tr = document.createElement("tr")
+            tr.setAttribute("class", "hover:bg-slate-100 cursor-pointer text-base z-40")
+
+            let ID_td = document.createElement("td")
+            ID_td.innerText = index
+            ID_td.setAttribute("class", "px-6 py-4 z-10")
+            ID_td.setAttribute("value", data["UUID"])
+
+            let UUID_td = document.createElement("td")
+            UUID_td.innerText = data["UUID"]
+            UUID_td.setAttribute("class", "px-6 py-4 z-10")
+            UUID_td.setAttribute("value", data["UUID"])
+
+            let date = new Date(data["ReportTime"].seconds * 1000)
+
+            let reportTime_td = document.createElement("td")
+            reportTime_td.innerText = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
+            reportTime_td.setAttribute("class", "px-6 py-4 z-10")
+            reportTime_td.setAttribute("value", data["UUID"])
+
+            let studetnID_td = document.createElement("td")
+            studetnID_td.innerText = data["StudentID"]
+            studetnID_td.setAttribute("class", "px-6 py-4 z-10")
+            studetnID_td.setAttribute("value", data["UUID"])
+
+
+            let studentName_td = document.createElement("td")
+            studentName_td.innerText = data["StudentName"]
+            studentName_td.setAttribute("class", "px-6 py-4 z-10")
+            studentName_td.setAttribute("value", data["UUID"])
+            
+
+            let verdict_td = document.createElement("td")
+
+            let verdict = data["AdministratorVerdict"]
+            let seen = data["AdministratorSeen"]
+
+            let status = "處理中"
+
+            if(seen){
+                status = "已看過"
+            }
+
+            if(verdict){
+                status = "已完成"
+            }
+
+            verdict_td.innerText = status
+            verdict_td.setAttribute("class", "px-6 py-4 z-10")
+            verdict_td.setAttribute("value", data["UUID"])
+
+            tr.setAttribute("value", data["UUID"])
+            tr.appendChild(ID_td)
+            tr.appendChild(UUID_td)
+            tr.appendChild(reportTime_td)
+            tr.appendChild(studetnID_td)
+            tr.appendChild(studentName_td)
+            tr.appendChild(verdict_td)
+
+            tr.addEventListener("click", (e) => {
+                console.log(fetch_data[data["UUID"]])
+            })
+
+            document.getElementsByTagName("table")[0].appendChild(tr)
+        }
+    </script>
+</html>
