@@ -14,3 +14,9 @@
 /app/.externalNativeBuild
 /app/.cxx
 /app/local.properties
+/backend/service/serviceAccountKey.json
+/backend/service/.idea/
+/backend/service/__pycache__/
+/backend/service/html/node_modules/
+/backend/service/html/package.json
+/backend/service/html/package-lock.json

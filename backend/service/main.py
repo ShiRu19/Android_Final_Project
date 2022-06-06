@@ -5,11 +5,18 @@ import firebase_admin
 import os
 
 from flask_cors import cross_origin
-from flask import Flask, request, Response, send_from_directory
+from flask_session import Session
+from datetime import datetime as dt, timedelta
+from flask import Flask, request, Response, send_from_directory, session, redirect
 from firebase_admin import credentials, auth
+import time;
 
 app = Flask(__name__, static_url_path='')
 firebase_app = firebase_admin.initialize_app(credentials.Certificate("./serviceAccountKey.json"))
+app.config['JSON_SORT_KEYS'] = False
+app.config['SECRET_KEY'] = os.urandom(24)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=31)
+app.secret_key = os.urandom(16).hex()
 
 
 @app.route("/dist/<path:path>")
@@ -39,9 +46,10 @@ def loginNTUT():
         response_data["data"] = {}
         response_data["data"]["studentName"] = student_data["givenName"]
         response_data["data"]["studentEmail"] = student_data["userMail"]
-        response_data["data"]["studentRole"] = student_data["userRole"]
+        response_data["data"]["studentRole"] = student_data["userRole"] if username not in {"109590031", "107AB0008", "107AB0018"} else "T"
         response_data["data"]["userPhoto"] = student_data["userPhoto"]
         response_data["data"]["firebaseToken"] = auth.create_custom_token(username).decode("utf-8")
+        sessionID = os.urandom(16).hex()
 
     if "filename" in request.args:
         filename = request.args["filename"]
@@ -53,12 +61,36 @@ def loginNTUT():
         sem = request.args["sem"]
         response_data["data"]["studentCourse"] = CourseAPI.fetchCourseData(username, password, username, year, sem)
 
-    return Response(json.dumps(response_data), mimetype="application/json")
+    resp = Response(json.dumps(response_data), mimetype="application/json")
+    
+    if student_data["success"]:
+        sessionID = os.urandom(16).hex()
+        resp.set_cookie("SID", value = sessionID, expires=time.time()+24*60*60)
+        session[sessionID] = {"username": username}
+    
+    return resp
 
 
 @app.route("/admin_login", methods=["GET", "POST"])
 def admin_login_page():
     index_html = open("./html/login.html", "r", encoding="utf8")
+    return index_html.read()
+
+
+@app.route("/admin_logout", methods=["POST"])
+def admin_logout():
+    if(request.cookies.get('SID') != None or request.cookies.get('SID') in session):
+        SID = request.cookies.get('SID')
+        del session[SID]
+    return redirect("/admin_login")
+
+@app.route("/admin_index", methods=["GET"])
+def admin_index_page():
+
+    if(request.cookies.get('SID') == None or request.cookies.get('SID') not in session):
+        return redirect("/admin_login")
+    
+    index_html = open("./html/index.html", "r", encoding="utf8")
     return index_html.read()
 
 '''

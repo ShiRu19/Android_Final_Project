@@ -1,0 +1,6 @@
+serviceAccountKey.json
+/.idea/
+/__pycache__/
+/html/node_modules/
+/html/package.json
+/html/package-lock.json

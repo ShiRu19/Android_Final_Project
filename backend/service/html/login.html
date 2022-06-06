@@ -30,7 +30,6 @@
         document.getElementById("login").addEventListener("click", (e) => {
             let username = document.getElementById("username").value;
             let password = document.getElementById("password").value;
-            console.log(username + " " + password);
             
             Swal.fire({
                 title: "登入中...",
@@ -45,14 +44,14 @@
                         contentType: "application/json",
                         success(data, status, xhr){
                             if(data["status"] == "ok"){
-                                if(data["userRole"] == "T"){
+                                if(data["data"]["studentRole"] == "T"){
                                     Swal.fire({
                                         icon: "success",
                                         title: "登入成功",
                                         timer: 1500,
                                         showConfirmButton: false
                                     }).then(() => {
-                                        window.location.href = "/"
+                                        window.location.href = "/admin_index"
                                     })
                                 }else{
                                     Swal.fire({

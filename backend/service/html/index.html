@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <meta charset="UTF-8">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./dist/output.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script  src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    </head>
+    <body>
+        <div class="bg-orange-300 overflow-y-hidden overflow-x-hidden w-screen h-screen p-10">
+            <div class="relative rounded-md left-[50%] top-[50%] lg:w-[30%] md:w-full h-fit translate-x-[-50%] translate-y-[-50%] p-10 bg-white text-center">
+                <p class="mb-10 lg:text-4xl md:text-6xl font-bold"> 北科社交距離 - 行政端 </p>
+                <div class="flex flex-rows gap-10">
+                    <a href="./verdict" class="w-[50%] h-full bg-slate-100 p-10 shadow-md rounded-md hover:bg-slate-200">
+                        <img src="./dist/quality-control.png" alt="verdict">
+                        <p class="mt-5 lg:text-lg md:text-4xl"> 審核上傳資料 </p>
+                    </a>
+                    <a href="./statistic" class="w-[50%] h-full bg-slate-100 p-10 shadow-md rounded-md hover:bg-slate-200">
+                        <img src="./dist/analytics.png" alt="statistic"> 
+                        <p class="mt-5 lg:text-lg md:text-4xl"> 查看統計資料 </p>
+                    </a>
+                </div>
+                <button id="logout" class="mt-10 bg-blue-300 lg:text-2xl md:text-4xl rounded-md w-full p-3 font-bold shadow-md hover:bg-blue-400 active:translate-x-[1%] active:translate-y-[1%]"> 登出帳號 </button>
+            </div>
+        </div>
+    </body>
+    <script>
+        document.getElementById("logout").addEventListener("click", (e) => {
+            Swal.fire({
+                title: "登出中...",
+                timer: 1500,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                didOpen: () => {
+                    $.ajax({
+                        url: "./admin_logout",
+                        type: "POST",
+                        success(data, status, xhr){
+                            Swal.fire({
+                                icon: "success",
+                                title: "登出成功",
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => {
+                                location.reload()
+                            })
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+</html>
