@@ -12,6 +12,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="密切接觸者："
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/footprint_activities" />
 
@@ -22,6 +23,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="足跡地點："
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/footprint_time" />
 
@@ -32,6 +34,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="活動事由："
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/footprint_location" />
 
@@ -42,6 +45,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="足跡日期："
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,7 +56,36 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:text="足跡時間："
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/footprint_date" />
+
+    <TextView
+        android:id="@+id/pick_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/text_frame_shape"
+        android:text="選擇日期"
+        android:textColor="@color/grey_500"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toEndOf="@+id/footprint_date"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pick_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/text_frame_shape"
+        android:text="選擇時間"
+        android:textColor="@color/grey_500"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toEndOf="@+id/footprint_time"
+        app:layout_constraintTop_toBottomOf="@+id/pick_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

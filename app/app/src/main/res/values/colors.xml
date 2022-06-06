@@ -7,6 +7,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey_100">#FAFAFAFF</color>
+    <color name="grey_300">#DCDCDC</color>
+    <color name="grey_500">#808080</color>
     <color name="red_500">#F44336</color>
     <color name="red_300">#E57373</color>
     <color name="orange_500">#FF9800</color>

@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Android_Final_Project/app/app/src/main/res/drawable/border.xml" value="0.1785" />
+        <entry key="..\:/AndroidStudioProjects/Android_Final_Project/app/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1785" />
+        <entry key="..\:/AndroidStudioProjects/Android_Final_Project/app/app/src/main/res/drawable/nav_item_color_state.xml" value="0.1785" />
+        <entry key="..\:/AndroidStudioProjects/Android_Final_Project/app/app/src/main/res/drawable/text_frame_shape.xml" value="0.1785" />
+        <entry key="..\:/AndroidStudioProjects/Android_Final_Project/app/app/src/main/res/layout/activity_login.xml" value="0.17916666666666667" />
         <entry key="..\:/AndroidStudioProjects/Android_Final_Project/app/app/src/main/res/layout/addfootprints.xml" value="0.178125" />
         <entry key="..\:/AndroidStudioProjects/Android_Final_Project/app/app/src/main/res/layout/other_footprints.xml" value="0.178125" />
         <entry key="..\:/AndroidStudioProjects/Android_Final_Project/app/app/src/main/res/menu/lobby_menu.xml" value="0.17916666666666667" />
