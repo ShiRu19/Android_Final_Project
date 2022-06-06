@@ -4,11 +4,17 @@ import json
 import firebase_admin
 import os
 
-from flask import Flask, request, Response
+from flask_cors import cross_origin
+from flask import Flask, request, Response, send_from_directory
 from firebase_admin import credentials, auth
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 firebase_app = firebase_admin.initialize_app(credentials.Certificate("./serviceAccountKey.json"))
+
+
+@app.route("/dist/<path:path>")
+def returnStaticFile(path):
+	return send_from_directory('./html/dist', path)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -48,6 +54,12 @@ def loginNTUT():
         response_data["data"]["studentCourse"] = CourseAPI.fetchCourseData(username, password, username, year, sem)
 
     return Response(json.dumps(response_data), mimetype="application/json")
+
+
+@app.route("/admin_login", methods=["GET", "POST"])
+def admin_login_page():
+    index_html = open("./html/login.html", "r", encoding="utf8")
+    return index_html.read()
 
 '''
 @app.route("/confirmReport", methods=["POST"])

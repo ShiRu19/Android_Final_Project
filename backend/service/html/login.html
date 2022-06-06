@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <meta charset="UTF-8">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./dist/output.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script  src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    </head>
+    <body>
+        <div class="bg-orange-500 overflow-y-hidden overflow-x-hidden w-screen h-screen">
+            <div class="absolute left-[50%] top-[50%] rounded-xl bg-white translate-x-[-50%] translate-y-[-50%] p-10 md:w-[90%] lg:w-fit">
+                <p class="text-center font-bold lg:text-4xl lg:mb-10 md:text-8xl md:mb-20"> 北科社交距離 </p>
+                <div class="lg:my-4 md:my-10 w-full">
+                    <label class="md:text-4xl lg:text-base"> 行政端帳號 <input id="username" type="account" class="w-full border-2 lg:rounded-md md:text-6xl md:p-5 md:rounded-2xl lg:text-base focus:border-orange-500 focus:outline-none lg:p-2"></label>
+                </div>
+                <div class="lg:my-4 md:my-10 w-full">
+                    <label class="md:text-4xl lg:text-base"> 行政端密碼 <input id="password" type="password" class="w-full border-2 lg:rounded-md md:text-6xl md:p-5 md:rounded-2xl lg:text-base focus:border-orange-500 focus:outline-none lg:p-2"></label>
+                </div>
+                <div class="lg:mt-3 md:mt-11 w-full">
+                    <button id="login" class="w-full bg-orange-500 lg:p-2 text-white lg:text-xl lg:rounded-md md:text-6xl md:p-5 md:rounded-2xl md:my-10 font-bold hover:bg-orange-300 hover:transition-all hover:duration-300 ease-in-out"> 登入 </button>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+
+        document.getElementById("login").addEventListener("click", (e) => {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            console.log(username + " " + password);
+            
+            Swal.fire({
+                title: "登入中...",
+                timer: 1500,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                    $.ajax({
+                        url: "./login?username=" + username + "&password=" + password + "",
+                        type: "POST",
+                        contentType: "application/json",
+                        success(data, status, xhr){
+                            if(data["status"] == "ok"){
+                                if(data["userRole"] == "T"){
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "登入成功",
+                                        timer: 1500,
+                                        showConfirmButton: false
+                                    }).then(() => {
+                                        window.location.href = "/"
+                                    })
+                                }else{
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "登入失敗",
+                                        text: "您的帳號是學生端的帳號，而不是行政端的帳號",
+                                        showConfirmButton: true
+                                    })
+                                }
+                            }else{
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "登入失敗",
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                })
+                            }
+                        }
+                    })
+                },
+            });
+
+        });
+
+    </script>
+</html>
