@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <meta charset="UTF-8">
+        <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/output.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script  src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    </head>
+    <body>
+        <div class="bg-orange-300 overflow-x-hidden w-screen h-screen p-10">
+            <div class="relative rounded-md lg:w-[80%] md:w-full h-[100%] bg-white text-center mx-auto overflow-auto p-5">
+                <div class="flex flex-row justify-center w-[70%] h-fit gap-5 mx-auto">
+                    <div class="w-[50%] h-full">
+                        <p class="text-lg my-5"> 本日新增確診個案 </p>
+                        <div class="bg-slate-200 h-fit w-full text-center">
+                            <p id="today" class="text-9xl inline-block leading-normal align-middle"> </p>
+                        </div>
+                    </div>
+                    <div class="w-[50%] h-full">
+                        <p class="text-lg my-5"> 累積新增確診個案 </p>
+                        <div class="bg-slate-200 h-fit w-full text-center">
+                            <p id="total" class="text-9xl inline-block leading-normal align-middle"> </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative rounded-md lg:w-[80%] md:w-full h-fit bg-white text-center mx-auto overflow-auto flex-grow mt-10">
+                    <table class="w-full text-base text-black dark:text-gray-400 text-center relative">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">#</th>
+                                <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">UUID 後綴</th>
+                                <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">班級</th>
+                                <th scope="col" class="sticky top-0 bg-gray-200 px-6 py-3">確診時間</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y text-base">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        Swal.fire({
+            title: '資料載入中...',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                let index = 0
+                $.ajax({
+                    url: "./get_confirm_data",
+                    type: "GET",
+                    contentType: "application/json",
+                    success(data, status, xhr){
+                        fecthData = data["data"]
+                        today = 0
+                        total = fecthData.length
+                        for(let i = 0; i < fecthData.length; i++){
+                            let tr = document.createElement("tr")
+                            tr.setAttribute("class", "hover:bg-slate-100 cursor-pointer text-base z-40 border")
+
+                            let ID_td = document.createElement("td")
+                            ID_td.innerText = index+1
+                            ID_td.setAttribute("class", "px-6 py-4 z-10")
+
+                            let UUID_td = document.createElement("td")
+                            UUID_td.innerText = fecthData[i]["ID"]
+                            UUID_td.setAttribute("class", "px-6 py-4 z-10")
+
+                            console.log(fecthData[i]["studentClass"] + " " + fecthData[i]["confirmDate"])
+
+                            let studentCourse_td = document.createElement("td")
+                            studentCourse_td.innerText = fecthData[i]["studentClass"]
+                            studentCourse_td.setAttribute("class", "px-6 py-4 z-10")
+
+                            let confirmDate_td = document.createElement("td")
+                            let date = new Date(parseInt(fecthData[i]["confirmDate"]))
+                            let dateString = date.toLocaleDateString('zh-TW', { timeZone: 'Asia/Taipei' })
+                            confirmDate_td.innerText = dateString
+                            confirmDate_td.setAttribute("class", "px-6 py-4 z-10")
+
+                            let date_instance = new Date();
+                            let date_instance_string = date.toLocaleDateString('zh-TW', { timeZone: 'Asia/Taipei' })
+
+                            if(date.setHours(0,0,0,0) === date_instance.setHours(0,0,0,0)){
+                                today += 1
+                                tr.setAttribute("class", "hover:bg-yellow-100 cursor-pointer text-base z-40 bg-yellow-200")
+                            }
+
+                            tr.appendChild(ID_td)
+                            tr.appendChild(UUID_td)
+                            tr.appendChild(studentCourse_td)
+                            tr.appendChild(confirmDate_td)
+
+                            document.getElementsByTagName("table")[0].appendChild(tr)
+
+                            index += 1
+                        }
+                        document.getElementById("today").innerText = today
+                        document.getElementById("total").innerText = total
+                    }
+                })
+            }
+        })
+    </script>
+</html>

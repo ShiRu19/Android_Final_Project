@@ -39,7 +39,7 @@ def fetchCourseData(username, password, studentID, year, sem):
         soup = BeautifulSoup(res.text, 'lxml')
         course_array = soup.html.find_all("a")
 
-        print(soup.prettify())
+        #print(soup.prettify())
 
         course_list = []
         table = soup.html.find_all("table")[1].findChildren("tr")

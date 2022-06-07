@@ -61,6 +61,9 @@
         var db = null;
         var storage = null;
 
+        let username = ""
+        let confirmWeekDay = ""
+
         Swal.fire({
             title: '資料載入中...',
             timer: 2000,
@@ -156,6 +159,9 @@
                 document.getElementById("OnsetDateString").innerText = "回報發病日期：" + onsetDateString.substring(0, onsetDateString.indexOf(" "))
                 document.getElementById("PCRDateString").innerText = "回報 PCR 陽日期：" + (doc.data()["PCRResult"] ? PCRDateString.substring(0, PCRDateString.indexOf(" ")) : PCRDateString)
                 document.getElementById("IsolateString").innerText = "回報居隔結束日期：" + (doc.data()["Isolate"] ? isolateDateString.substring(0, isolateDateString.indexOf(" ")) : isolateDateString)
+            
+                username = doc.data()["StudentID"];
+                confirmWeekDay = rapidDate.getDay() == 0 ? 7 : rapidDate.getDay()
             });
 
         }
@@ -168,15 +174,36 @@
                 confirmButtonText: '是',
                 cancelButtonText: '否',
             }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                    '已將通報列為確診個案！',
-                    '',
-                    'success'
-                    )
-                    const queryString = window.location.search;
-                    const urlParams = new URLSearchParams(queryString);
-                    db.collection("report").doc(urlParams.get("id")).update({"AdministratorVerdict": 1})
+                if (result.isConfirmed) {  
+                    Swal.fire({
+                        title: '運行中...',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            $.ajax({
+                                url: "./admin_confirm?studentID=" + username + "&confirmWeekDay=" + confirmWeekDay,
+                                type: "POST",
+                                success(data, status, xhr){
+                                    if(data["status"] == "ok"){
+                                        const queryString = window.location.search;
+                                        const urlParams = new URLSearchParams(queryString);
+                                        db.collection("report").doc(urlParams.get("id")).update({"AdministratorVerdict": 1})
+                                        Swal.fire(
+                                            '已將通報列為確診個案！',
+                                            '',
+                                            'success'
+                                        )
+                                    }else{
+                                        Swal.fire(
+                                            '出現問題，請聯繫管理員',
+                                            data["message"],
+                                            'error'
+                                        )
+                                    }
+                                }
+                            })
+                        }
+                    })
                 }
             })
         })
