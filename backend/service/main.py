@@ -38,9 +38,9 @@ def test_custom_token(api_key):
     claims = auth.verify_id_token(id_token)
     assert claims['uid'] == 'user1'
 
-@app.route("/dist/<path:path>")
+@app.route("/static/<path:path>")
 def returnStaticFile(path):
-	return send_from_directory('./html/dist', path)
+	return send_from_directory('./static/', path)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -119,9 +119,12 @@ def admin_verdict_page():
     if(request.cookies.get('SID') == None or request.cookies.get('SID') not in session):
         return redirect("/admin_login")
     
-    index_html = open("./html/verdict.html", "r", encoding="utf8")
-    return index_html.read()
-
+    if "id" in request.args:
+        index_html = open("./html/verdict_data.html", "r", encoding="utf8")
+        return index_html.read()
+    else:
+        index_html = open("./html/verdict.html", "r", encoding="utf8")
+        return index_html.read()
 
 @app.route("/fetch_custom_token", methods=["POST"])
 def fetch_custom_token():
@@ -135,7 +138,6 @@ def fetch_custom_token():
     response_data["status"] = "ok"
     response_data["data"] = {}
     response_data["data"]["custom_token"] = auth.create_custom_token(username).decode("utf-8")
-    print(response_data["data"]["custom_token"])
     return Response(json.dumps(response_data), mimetype="application/json")
 
 if __name__ == "__main__":
