@@ -20,14 +20,17 @@
         <activity android:name=".activity.LobbyActivity"
             android:label = "Lobby Activity">
         </activity>
-        <activity android:name=".activity.StudentNotificationActivity"
-            android:label = "Student Notification Activity">
+        <activity android:name=".activity.StudentNotificationActivity_rapid"
+            android:label = "@string/lobby_menu_notification">
+        </activity>
+        <activity android:name=".activity.StudentNotificationActivity_PCR"
+            android:label = "@string/lobby_menu_notification">
         </activity>
         <activity android:name=".activity.OtherFootprintsActivity"
-            android:label = "Other Footprints Activity">
+            android:label = "@string/lobby_menu_notification">
         </activity>
         <activity android:name=".activity.AddFootprintsActivity"
-            android:label = "Add Footprints Activity">
+            android:label = "@string/lobby_menu_notification">
         </activity>
 
     </application>

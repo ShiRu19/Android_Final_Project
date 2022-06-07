@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.StudentNotificationActivity_PCR">
+
+    <TextView
+        android:id="@+id/TextView_rapidAntigenTest_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:text="@string/notification_PCR_result"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toStartOf="@+id/TextView_rapidAntigenTest_date"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_rapidAntigenTest_date">
+
+        <RadioButton
+            android:id="@+id/radio_pcr_positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="陽性" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/EditText_PCR_date"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="@string/notification_dateHint"
+                    android:inputType="date"
+                    android:maxLength="10"
+                    android:onClick="showDatePicker_PCR_date"/>
+
+                <ImageButton
+                    android:id="@+id/ImageButton_PCR_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="showDatePicker_PCR_date"
+                    android:src="@drawable/ic_notification_calendar"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/Button_PCR_certification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="PCR picture"
+                    android:textSize="10sp"
+                    android:onClick="uploadImage" />
+
+                <ImageButton
+                    android:id="@+id/Button_PCR_certification_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_notification_delete"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ImageView_PCR_certification"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="是否收到居家隔離通知書？"/>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="是" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="隔離期間："/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/EditText_insulation_startDate"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/notification_dateHint"
+                        android:maxLength="10"
+                        android:inputType="date"
+                        android:onClick="showDatePicker_isolation_date_start"
+                        android:focusable="false"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" ~ "/>
+
+                    <EditText
+                        android:id="@+id/EditText_insulation_endDate"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/notification_dateHint"
+                        android:maxLength="10"
+                        android:inputType="date"
+                        android:onClick="showDatePicker_isolation_date_end"
+                        android:focusable="false"/>
+                </LinearLayout>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="否"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/radio_pcr_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="陰性" />
+
+        <RadioButton
+            android:id="@+id/radio_pcr_unknown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="未知" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
