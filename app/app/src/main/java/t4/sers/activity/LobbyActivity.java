@@ -18,6 +18,7 @@ import com.tapadoo.alerter.Alerter;
 import t4.sers.R;
 import t4.sers.fragment.Debug;
 import t4.sers.fragment.PersonalFragment;
+import t4.sers.fragment.SchoolFragment;
 import t4.sers.fragment.SettingFragment;
 
 public class LobbyActivity extends AppCompatActivity {
@@ -81,6 +82,12 @@ public class LobbyActivity extends AppCompatActivity {
                 Debug debugFragment = Debug.newInstance("bla", "use");
                 getSupportActionBar().setTitle("測試用");
                 fragmentManager.replace(R.id.fragmentContainerView, debugFragment).commit();
+                return true;
+            }
+            if (item.getItemId() == R.id.school) {
+                SchoolFragment schoolFragment = SchoolFragment.newInstance("bla", "use");
+                getSupportActionBar().setTitle("全校防疫資訊");
+                fragmentManager.replace(R.id.fragmentContainerView, schoolFragment).commit();
                 return true;
             }
             return false;

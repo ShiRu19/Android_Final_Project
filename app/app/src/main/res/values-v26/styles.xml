@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="confirm_table_element_id">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_weight">0.5</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:autoSizeTextType">uniform</item>
+    </style>
+</resources>

@@ -84,7 +84,7 @@ def loginNTUT():
         year = request.args["year"]
         sem = request.args["sem"]
         response_data["data"]["studentCourse"] = CourseAPI.fetchCourseData(username, password, username, year, sem)
-        db.collection(u'user').document(u'109590099').set({"course": response_data["data"]["studentCourse"]})
+        db.collection(u'user').document(username).set({"course": response_data["data"]["studentCourse"]})
 
     resp = Response(json.dumps(response_data), mimetype="application/json")
 
