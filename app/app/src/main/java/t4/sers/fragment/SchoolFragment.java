@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -56,6 +57,7 @@ public class SchoolFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     final List<String> indexList = new ArrayList<>();
     final List<String> uuidList = new ArrayList<>();
@@ -100,6 +102,21 @@ public class SchoolFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_school, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.laySwipe);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            reloadData();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+        reloadData();
+        return view;
+    }
+
+    public void reloadData(){
+        indexList.clear();
+        uuidList.clear();
+        studentClassList.clear();
+        dateList.clear();
+        today = 0;
         Handler handler = new Handler();
         Runnable runnable = () -> {
             try {
@@ -141,6 +158,5 @@ public class SchoolFragment extends Fragment {
             }
         };
         mExecutor.execute(runnable);
-        return view;
     }
 }
