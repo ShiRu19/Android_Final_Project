@@ -40,7 +40,6 @@ def test_custom_token(api_key):
     claims = auth.verify_id_token(id_token)
     assert claims['uid'] == 'user1'
 
-
 @app.route("/static/<path:path>")
 def returnStaticFile(path):
     return send_from_directory('./static/', path)
@@ -163,16 +162,19 @@ def admin_confirm_post():
     for course in data["course"]["data"]:
         courseID = course["courseID"]
         isolate = False
+        isolateWeekDay = 0
         for date in course["courseTime"]:
             date_string = str(date)
             day = int(date_string.split("-")[0])
             if abs(day - confirmWeekDay) < 3:
+                isolateWeekDay = max(isolateWeekDay, day)
                 isolate = True
         if isolate == False:
             continue
         current_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-        studentCourse[courseID] = current_date.timestamp() * 1000
-    db.collection(u'app').document(u'confirm_course').update(studentCourse)
+        studentCourse[courseID] = {"courseID": courseID, "courseName": course["courseName"], "courseTeacher": course["courseTeacher"], "courseTime": course["courseTime"], "courseIsolateDate": isolateWeekDay}
+    dateString = current_date.strftime("%Y%m%d")
+    db.collection(u'confirmCourseDate').document(dateString).update(studentCourse)
     return Response(json.dumps(response_data), mimetype="application/json")
     
 
@@ -209,8 +211,10 @@ def getConfirmDate():
 
 @app.route("/get_confirm_course", methods=["GET"])
 def getConfirmCourse():
-    docs = db.collection(u'app').document(u'confirm_course').get()
-    response_data = {"status": "OK", "data": docs.to_dict()}
+    docs = db.collection(u'confirmCourseDate').stream()
+    response_data = {"status": "OK", "data": {}}
+    for doc in docs:
+        response_data["data"][doc.id] = doc.to_dict()
     return Response(json.dumps(response_data), mimetype="application/json")
 
 if __name__ == "__main__":

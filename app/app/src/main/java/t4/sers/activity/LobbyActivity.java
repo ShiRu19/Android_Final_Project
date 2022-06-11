@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.tapadoo.alerter.Alerter;
 
 import t4.sers.R;
+import t4.sers.fragment.CourseFragment;
 import t4.sers.fragment.Debug;
 import t4.sers.fragment.PersonalFragment;
 import t4.sers.fragment.SchoolFragment;
@@ -88,6 +89,12 @@ public class LobbyActivity extends AppCompatActivity {
                 SchoolFragment schoolFragment = SchoolFragment.newInstance("bla", "use");
                 getSupportActionBar().setTitle("全校防疫資訊");
                 fragmentManager.replace(R.id.fragmentContainerView, schoolFragment).commit();
+                return true;
+            }
+            if (item.getItemId() == R.id.course) {
+                CourseFragment courseFragment = CourseFragment.newInstance("bla", "use");
+                getSupportActionBar().setTitle("課程防疫資訊");
+                fragmentManager.replace(R.id.fragmentContainerView, courseFragment).commit();
                 return true;
             }
             return false;
