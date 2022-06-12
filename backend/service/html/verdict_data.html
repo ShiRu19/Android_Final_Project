@@ -63,6 +63,7 @@
 
         let username = ""
         let confirmWeekDay = ""
+		let rapidTestDate = 0
 
         Swal.fire({
             title: '資料載入中...',
@@ -145,6 +146,8 @@
                 let onsetDate = new Date(doc.data()["OnsetDate"].seconds * 1000)
                 let PCRDate = new Date(doc.data()["PCRResultDate"].seconds * 1000)
                 let isolateDate = new Date(doc.data()["IsolateDate"].seconds * 1000)
+				
+				rapidTestDate = doc.data()["RapidTestDate"].seconds * 1000
 
                 let rapidDateString = rapidDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
                 let onsetDateString = onsetDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
@@ -181,7 +184,7 @@
                         timerProgressBar: true,
                         didOpen: () => {
                             $.ajax({
-                                url: "./admin_confirm?studentID=" + username + "&confirmWeekDay=" + confirmWeekDay,
+                                url: "./admin_confirm?studentID=" + username + "&confirmWeekDay=" + confirmWeekDay + "&rapidTestDate=" + rapidTestDate,
                                 type: "POST",
                                 success(data, status, xhr){
                                     if(data["status"] == "ok"){

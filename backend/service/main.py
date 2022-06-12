@@ -10,6 +10,7 @@ import requests
 from firebase_admin import credentials, auth
 from firebase_admin import firestore
 from flask import Flask, request, Response, send_from_directory, session, redirect
+import pytz
 
 import CourseAPI
 
@@ -154,8 +155,13 @@ def admin_confirm_post():
         response_data["status"] = "Failed"
         response_data["message"] = "需輸入 confirmWeekDay 參數。"
         return Response(json.dumps(response_data), mimetype="application/json")
+    if "rapidTestDate" not in request.args:
+        response_data["status"] = "Failed"
+        response_data["message"] = "需輸入 rapidTestDate 參數。"
+        return Response(json.dumps(response_data), mimetype="application/json")
     confirmWeekDay = int(request.args["confirmWeekDay"])
     studentID = request.args["studentID"]
+    rapidTestDate = request.args["rapidTestDate"]
     studentCourse = {}
     doc = db.collection(u'user').document(studentID).get()
     data = doc.to_dict()
@@ -171,7 +177,7 @@ def admin_confirm_post():
                 isolate = True
         if isolate == False:
             continue
-        current_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        current_date = pytz.timezone('Asia/Taipei').localize(datetime.fromtimestamp(int(rapidTestDate)/1000.0)).replace(hour=0, minute=0, second=0, microsecond=0)
         studentCourse[courseID] = {"courseID": courseID, "courseName": course["courseName"], "courseTeacher": course["courseTeacher"], "courseTime": course["courseTime"], "courseIsolateDate": isolateWeekDay}
     dateString = current_date.strftime("%Y%m%d")
     db.collection(u'confirmCourseDate').document(dateString).update(studentCourse)
@@ -219,4 +225,5 @@ def getConfirmCourse():
 
 if __name__ == "__main__":
     test_custom_token("AIzaSyBUJBnbG2uyzHtTo0gWNHuNocfUMuXqxkU")
+    print(pytz.timezone('Asia/Taipei').localize(datetime.now()).replace(hour=0, minute=0, second=0, microsecond=0))
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

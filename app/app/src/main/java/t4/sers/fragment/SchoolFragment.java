@@ -112,14 +112,14 @@ public class SchoolFragment extends Fragment {
     }
 
     public void reloadData(){
-        indexList.clear();
-        uuidList.clear();
-        studentClassList.clear();
-        dateList.clear();
         today = 0;
         Handler handler = new Handler();
         Runnable runnable = () -> {
             try {
+                indexList.clear();
+                uuidList.clear();
+                studentClassList.clear();
+                dateList.clear();
                 String confirmCaseURL = getString(R.string.school_confirm_case_URL);
                 Connection.Response response = Jsoup.connect(confirmCaseURL).ignoreContentType(true).method(Connection.Method.GET).execute();
                 String body = response.body();
