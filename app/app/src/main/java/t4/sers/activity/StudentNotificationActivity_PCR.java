@@ -62,6 +62,9 @@ public class StudentNotificationActivity_PCR extends AppCompatActivity {
     private static final String ET_isolation_date_start = "EditText isolation start date";
     private static final String ET_isolation_date_end = "EditText isolation end date";
     private static final String IV_pcr_certification = "ImageView pcr certification";
+    private static final String is_PCR_positive = "Is PCR positive";
+    private static final String is_PCR_isolation = "Is PCR isolation";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,33 +245,6 @@ public class StudentNotificationActivity_PCR extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private void nextStatus() {
-        boolean isOpenNext = false;
-
-        if(isPositive && isInsulation) {
-            if(isDataCorrect_positive_date && isDataCorrect_pcr_certification && isDataCorrect_isolation_date_start && isDataCorrect_isolation_date_end) {
-                isOpenNext = true;
-            }
-            else {
-                isOpenNext = false;
-            }
-        }
-        else if(isPositive && !isInsulation) {
-            if(isDataCorrect_positive_date && isDataCorrect_pcr_certification) {
-                isOpenNext = true;
-            }
-            else{
-                isOpenNext = false;
-            }
-        }
-        else if(!isPositive) {
-            isOpenNext = true;
-        }
-
-        if (isOpenNext) Btn_next.setEnabled(true);
-        else Btn_next.setEnabled(false);
     }
 
     //
@@ -463,9 +439,58 @@ public class StudentNotificationActivity_PCR extends AppCompatActivity {
     //
     private void saveData() {
         SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString(ET_positive_date, EditText_positive_date.getText().toString());
-        editor.putString(ET_isolation_date_start, EditText_isolation_date_start.getText().toString());
-        editor.putString(ET_isolation_date_end, EditText_isolation_date_end.getText().toString());
+        editor.clear();
+        if(isPositive && isInsulation) {
+            editor.putString(ET_positive_date, EditText_positive_date.getText().toString());
+            editor.putString(ET_isolation_date_start, EditText_isolation_date_start.getText().toString());
+            editor.putString(ET_isolation_date_end, EditText_isolation_date_end.getText().toString());
+            editor.putInt(is_PCR_positive, 1);
+            editor.putInt(is_PCR_isolation, 1);
+        }
+        else if(isPositive && !isInsulation) {
+            editor.putString(ET_positive_date, EditText_positive_date.getText().toString());
+            editor.putString(ET_isolation_date_start, "");
+            editor.putString(ET_isolation_date_end, "");
+            editor.putInt(is_PCR_positive, 1);
+            editor.putInt(is_PCR_isolation, 0);
+        }
+        else{
+            editor.putString(ET_positive_date, "");
+            editor.putString(ET_isolation_date_start, "");
+            editor.putString(ET_isolation_date_end, "");
+            editor.putInt(is_PCR_positive, 0);
+            editor.putInt(is_PCR_isolation, 0);
+        }
         editor.apply();
+    }
+
+    //
+    // next button 狀態是否開啟
+    //
+    private void nextStatus() {
+        boolean isOpenNext = false;
+
+        if(isPositive && isInsulation) {
+            if(isDataCorrect_positive_date && isDataCorrect_pcr_certification && isDataCorrect_isolation_date_start && isDataCorrect_isolation_date_end) {
+                isOpenNext = true;
+            }
+            else {
+                isOpenNext = false;
+            }
+        }
+        else if(isPositive && !isInsulation) {
+            if(isDataCorrect_positive_date && isDataCorrect_pcr_certification) {
+                isOpenNext = true;
+            }
+            else{
+                isOpenNext = false;
+            }
+        }
+        else if(!isPositive) {
+            isOpenNext = true;
+        }
+
+        if (isOpenNext) Btn_next.setEnabled(true);
+        else Btn_next.setEnabled(false);
     }
 }
