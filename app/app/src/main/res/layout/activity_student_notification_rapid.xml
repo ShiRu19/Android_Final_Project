@@ -24,7 +24,6 @@
         android:hint="@string/notification_dateHint"
         android:maxLength="10"
         android:inputType="date"
-        android:onClick="showDatePicker"
         android:focusable="false"
         app:layout_constraintStart_toStartOf="@+id/TextView_rapidAntigenTest_date"
         app:layout_constraintTop_toBottomOf="@+id/TextView_rapidAntigenTest_date" />
@@ -34,7 +33,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_notification_calendar"
-        android:onClick="showDatePicker"
         app:layout_constraintBottom_toBottomOf="@+id/EditText_rapidAntigenTest_date"
         app:layout_constraintStart_toEndOf="@+id/EditText_rapidAntigenTest_date" />
 
@@ -62,9 +60,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="picture"
-        android:textSize="10sp"
-        android:onClick="uploadImage"
+        android:text="@string/notification_take_picture"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/TextView_rapidAntigenTest_certificate"
         app:layout_constraintTop_toBottomOf="@+id/TextView_rapidAntigenTest_certificate" />
 
@@ -85,5 +82,16 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/Button_rapidAntigenTest_certification"
         app:layout_constraintTop_toBottomOf="@+id/Button_rapidAntigenTest_certification"/>
+
+    <Button
+        android:id="@+id/Button_next_rapid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/next_button_selector"
+        android:enabled="false"
+        android:text="@string/nextButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ImageView_rapidAntigenTest_certification" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

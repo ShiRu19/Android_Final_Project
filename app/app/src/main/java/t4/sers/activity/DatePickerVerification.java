@@ -98,11 +98,13 @@ public class DatePickerVerification extends AppCompatActivity {
         if(date_picker.compareTo(date_now) > 0) {
             // 選取日期在範圍區間之後
             Toast.makeText(context, "選取日期不可大於現在", Toast.LENGTH_LONG).show();
+            date_string = "";
             return;
         }
         else if(date_picker.compareTo(date_limit) < 0) {
             // 選取日期在範圍區間之前
             Toast.makeText(context, "選取日期不可小於前一個月", Toast.LENGTH_LONG).show();
+            date_string = "";
             return;
         }
         else {
@@ -150,8 +152,10 @@ public class DatePickerVerification extends AppCompatActivity {
             return true;
         }
         else {
-            date_string = context.getResources().getString(R.string.notification_dateHint);
-            date_string_end = context.getResources().getString(R.string.notification_dateHint);
+            //date_string = context.getResources().getString(R.string.notification_dateHint);
+            //date_string_end = context.getResources().getString(R.string.notification_dateHint);
+            date_string = "";
+            date_string_end = "";
             Toast.makeText(context, "請選取正確隔離日期", Toast.LENGTH_LONG).show();
             return false;
         }

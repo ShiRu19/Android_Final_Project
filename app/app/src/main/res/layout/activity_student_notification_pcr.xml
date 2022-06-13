@@ -5,159 +5,217 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.StudentNotificationActivity_PCR">
-
-    <TextView
-        android:id="@+id/TextView_rapidAntigenTest_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:text="@string/notification_PCR_result"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        app:layout_constraintStart_toStartOf="@+id/TextView_rapidAntigenTest_date"
-        app:layout_constraintTop_toBottomOf="@+id/TextView_rapidAntigenTest_date">
-
-        <RadioButton
-            android:id="@+id/radio_pcr_positive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="陽性" />
-
+    <ScrollView
+        android:id="@+id/scrollView_pcr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/EditText_PCR_date"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="@string/notification_dateHint"
-                    android:inputType="date"
-                    android:maxLength="10"
-                    android:onClick="showDatePicker_PCR_date"/>
-
-                <ImageButton
-                    android:id="@+id/ImageButton_PCR_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="showDatePicker_PCR_date"
-                    android:src="@drawable/ic_notification_calendar"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/Button_PCR_certification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="PCR picture"
-                    android:textSize="10sp"
-                    android:onClick="uploadImage" />
-
-                <ImageButton
-                    android:id="@+id/Button_PCR_certification_delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_notification_delete"
-                    android:visibility="invisible" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ImageView_PCR_certification"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp" />
 
             <TextView
+                android:id="@+id/TextView_PCR_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="是否收到居家隔離通知書？"/>
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:text="@string/notification_PCR_result" />
 
             <RadioGroup
-                android:layout_width="wrap_content"
+                android:id="@+id/RadioGroup_pcr"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp">
+                android:layout_marginStart="20dp">
 
                 <RadioButton
+                    android:id="@+id/Radio_pcr_positive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="是" />
+                    android:text="@string/notification_PCR_positive" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:text="隔離期間："/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/LinearLayout_pcr_positive"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <EditText
-                        android:id="@+id/EditText_insulation_startDate"
-                        android:layout_width="120dp"
+                    <TextView
+                        android:id="@+id/TextView_PCR_date"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/notification_dateHint"
-                        android:maxLength="10"
-                        android:inputType="date"
-                        android:onClick="showDatePicker_isolation_date_start"
-                        android:focusable="false"/>
+                        android:text="@string/notification_PCR_date"
+                        android:layout_marginStart="20dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/EditText_PCR_date"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:hint="@string/notification_dateHint"
+                            android:inputType="date"
+                            android:maxLength="10" />
+
+                        <ImageButton
+                            android:id="@+id/ImageButton_PCR_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_notification_calendar"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/TextView_pcr_certification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginStart="20dp"
+                            android:text="@string/notification_PCR_certification"/>
+                        <TextView
+                            android:id="@+id/TextView_pcr_certification_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:textSize="10sp"
+                            android:text="@string/notification_PCR_certification_hint"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/Button_PCR_certification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="@string/notification_take_picture"
+                            android:textSize="10sp" />
+
+                        <ImageButton
+                            android:id="@+id/Button_PCR_certification_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_notification_delete"
+                            android:visibility="invisible" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ImageView_PCR_certification"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" ~ "/>
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="是否收到居家隔離通知書？"/>
 
-                    <EditText
-                        android:id="@+id/EditText_insulation_endDate"
-                        android:layout_width="120dp"
+                    <RadioGroup
+                        android:id="@+id/RadioGroup_insulation"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="@string/notification_dateHint"
-                        android:maxLength="10"
-                        android:inputType="date"
-                        android:onClick="showDatePicker_isolation_date_end"
-                        android:focusable="false"/>
+                        android:layout_marginStart="30dp">
+
+                        <RadioButton
+                            android:id="@+id/Radio_insulation_yes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="是" />
+
+                        <LinearLayout
+                            android:id="@+id/LinearLayout_insulation_yes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="30dp"
+                                android:text="隔離期間："/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="30dp"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/EditText_insulation_startDate"
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/notification_dateHint"
+                                    android:maxLength="10"
+                                    android:inputType="date"
+                                    android:focusable="false"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=" ~ "/>
+
+                                <EditText
+                                    android:id="@+id/EditText_insulation_endDate"
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/notification_dateHint"
+                                    android:maxLength="10"
+                                    android:inputType="date"
+                                    android:focusable="false"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <RadioButton
+                            android:id="@+id/Radio_isolation_no"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="否"/>
+                    </RadioGroup>
                 </LinearLayout>
 
                 <RadioButton
+                    android:id="@+id/Radio_pcr_negative"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="否"/>
+                    android:text="陰性" />
+
+                <RadioButton
+                    android:id="@+id/Radio_pcr_unknown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未知" />
             </RadioGroup>
+
+            <Button
+                android:id="@+id/Button_next_rapid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/next_button_selector"
+                android:enabled="false"
+                android:text="@string/nextButton"
+                android:layout_gravity="right" />
         </LinearLayout>
-
-        <RadioButton
-            android:id="@+id/radio_pcr_negative"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="陰性" />
-
-        <RadioButton
-            android:id="@+id/radio_pcr_unknown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="未知" />
-    </RadioGroup>
-
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
