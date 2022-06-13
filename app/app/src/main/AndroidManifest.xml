@@ -16,9 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolEpidemicReportSystem">
+        <receiver
+            android:name=".receiver.WarningReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+
         <activity
-            android:name=".activity.StudentNotificationActivity_course"
-            android:exported="false" />
+            android:name=".activity.WarningLiftActivity"
+            android:label="解除警示狀態" />
+
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
@@ -30,19 +37,22 @@
         </activity>
         <activity
             android:name=".activity.LobbyActivity"
-            android:label="Lobby Activity"></activity>
+            android:label="Lobby Activity" />
         <activity
             android:name=".activity.StudentNotificationActivity_rapid"
-            android:label="@string/lobby_menu_notification"></activity>
+            android:label="@string/lobby_menu_notification" />
         <activity
             android:name=".activity.StudentNotificationActivity_PCR"
-            android:label="@string/lobby_menu_notification"></activity>
+            android:label="@string/lobby_menu_notification" />
+        <activity
+            android:name=".activity.StudentNotificationActivity_course"
+            android:label="@string/lobby_menu_notification" />
         <activity
             android:name=".activity.OtherFootprintsActivity"
-            android:label="@string/lobby_menu_notification"></activity>
+            android:label="@string/lobby_menu_notification" />
         <activity
             android:name=".activity.AddFootprintsActivity"
-            android:label="@string/lobby_menu_notification"></activity>
+            android:label="@string/lobby_menu_notification" />
     </application>
 
 </manifest>

@@ -1,11 +1,18 @@
 package t4.sers.activity;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -16,13 +23,24 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.tapadoo.alerter.Alerter;
 
 import t4.sers.R;
+import t4.sers.fragment.CourseFragment;
 import t4.sers.fragment.Debug;
 import t4.sers.fragment.PersonalFragment;
+import t4.sers.fragment.SchoolFragment;
 import t4.sers.fragment.SettingFragment;
+import t4.sers.receiver.WarningReceiver;
 
 public class LobbyActivity extends AppCompatActivity {
 
     FirebaseFirestore firebaseFirestore;
+    String studentName;
+    String studentCourse;
+    String studentPhoto;
+    String studentEmail;
+
+    private NotificationManager mNotificationManager;
+    private static final int NOTIFICATION_ID = 0;
+    private static final String PRIMARY_CHANNEL_ID = "社交距離警示";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,10 +52,10 @@ public class LobbyActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String studentName = intent.getStringExtra("studentName");
-        String studentCourse = intent.getStringExtra("studentCourse");
-        String studentPhoto = intent.getStringExtra("imageURI");
-        String studentEmail = intent.getStringExtra("studentEmail");
+        studentName = intent.getStringExtra("studentName");
+        studentCourse = intent.getStringExtra("studentCourse");
+        studentPhoto = intent.getStringExtra("imageURI");
+        studentEmail = intent.getStringExtra("studentEmail");
 
         Alerter.create(LobbyActivity.this)
                 .setBackgroundColorRes(R.color.green_500)
@@ -57,7 +75,6 @@ public class LobbyActivity extends AppCompatActivity {
                 Log.d("Firestore", "Cached get failed: ", task.getException());
             }
         });
-
 
         getSupportActionBar().setTitle("個人防疫資訊");
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, PersonalFragment.newInstance(studentCourse, "")).commit();
@@ -83,8 +100,33 @@ public class LobbyActivity extends AppCompatActivity {
                 fragmentManager.replace(R.id.fragmentContainerView, debugFragment).commit();
                 return true;
             }
+            if (item.getItemId() == R.id.school) {
+                SchoolFragment schoolFragment = SchoolFragment.newInstance("bla", "use");
+                getSupportActionBar().setTitle("全校防疫資訊");
+                fragmentManager.replace(R.id.fragmentContainerView, schoolFragment).commit();
+                return true;
+            }
+            if (item.getItemId() == R.id.course) {
+                CourseFragment courseFragment = CourseFragment.newInstance("bla", "use");
+                getSupportActionBar().setTitle("課程防疫資訊");
+                fragmentManager.replace(R.id.fragmentContainerView, courseFragment).commit();
+                return true;
+            }
             return false;
         });
+
+        createNotificationChannel();
+
+        Intent notifyIntent = new Intent(this, WarningReceiver.class);
+        PendingIntent notifyPendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        long repeatInterval = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
+        long triggerTime = SystemClock.elapsedRealtime() + repeatInterval;
+
+        if (alarmManager != null) {
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerTime, repeatInterval, notifyPendingIntent);
+        }
 
     }
 
@@ -107,6 +149,11 @@ public class LobbyActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
+        else if (id == R.id.action_notification_course) {
+            Intent intent = new Intent(this, StudentNotificationActivity_course.class);
+            startActivity(intent);
+            return true;
+        }
         else if (id == R.id.action_other_footprints) {
             Intent intent = new Intent(this, OtherFootprintsActivity.class);
             startActivity(intent);
@@ -115,4 +162,24 @@ public class LobbyActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void createNotificationChannel() {
+
+        // Create a notification manager object.
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Notification channels are only available in OREO and higher.
+        // So, add a check on SDK version.
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+            // Create the NotificationChannel with all the parameters.
+            NotificationChannel notificationChannel = new NotificationChannel(PRIMARY_CHANNEL_ID, "社交距離通知", NotificationManager.IMPORTANCE_HIGH);
+
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.RED);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setDescription("提供即時的暴露資訊");
+            mNotificationManager.createNotificationChannel(notificationChannel);
+
+        }
+    }
 }

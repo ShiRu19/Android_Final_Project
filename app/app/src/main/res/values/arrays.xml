@@ -1,5 +1,6 @@
 <resources>
     <string-array name="setting_text">
+        <item name="about">@string/setting_option_reset_warning</item>
         <item name="about">@string/setting_option_about_us</item>
         <item name="logout">@string/setting_logout_text</item>
     </string-array>
@@ -9,6 +10,7 @@
         <item>@color/orange_300</item>
     </array>
     <array name="setting_icon">
+        <item>@drawable/ic_baseline_replay_24</item>
         <item>@drawable/ic_outline_auto_awesome_24</item>
         <item>@drawable/ic_baseline_logout_24</item>
     </array>

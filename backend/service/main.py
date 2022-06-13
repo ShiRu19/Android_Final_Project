@@ -10,6 +10,7 @@ import requests
 from firebase_admin import credentials, auth
 from firebase_admin import firestore
 from flask import Flask, request, Response, send_from_directory, session, redirect
+import pytz
 
 import CourseAPI
 
@@ -39,7 +40,6 @@ def test_custom_token(api_key):
     id_token = _sign_in(custom_token, api_key)
     claims = auth.verify_id_token(id_token)
     assert claims['uid'] == 'user1'
-
 
 @app.route("/static/<path:path>")
 def returnStaticFile(path):
@@ -84,7 +84,7 @@ def loginNTUT():
         year = request.args["year"]
         sem = request.args["sem"]
         response_data["data"]["studentCourse"] = CourseAPI.fetchCourseData(username, password, username, year, sem)
-        db.collection(u'user').document(u'109590099').set({"course": response_data["data"]["studentCourse"]})
+        db.collection(u'user').document(username).set({"course": response_data["data"]["studentCourse"]})
 
     resp = Response(json.dumps(response_data), mimetype="application/json")
 
@@ -155,24 +155,32 @@ def admin_confirm_post():
         response_data["status"] = "Failed"
         response_data["message"] = "需輸入 confirmWeekDay 參數。"
         return Response(json.dumps(response_data), mimetype="application/json")
+    if "rapidTestDate" not in request.args:
+        response_data["status"] = "Failed"
+        response_data["message"] = "需輸入 rapidTestDate 參數。"
+        return Response(json.dumps(response_data), mimetype="application/json")
     confirmWeekDay = int(request.args["confirmWeekDay"])
     studentID = request.args["studentID"]
+    rapidTestDate = request.args["rapidTestDate"]
     studentCourse = {}
     doc = db.collection(u'user').document(studentID).get()
     data = doc.to_dict()
     for course in data["course"]["data"]:
         courseID = course["courseID"]
         isolate = False
+        isolateWeekDay = 0
         for date in course["courseTime"]:
             date_string = str(date)
             day = int(date_string.split("-")[0])
             if abs(day - confirmWeekDay) < 3:
+                isolateWeekDay = max(isolateWeekDay, day)
                 isolate = True
         if isolate == False:
             continue
-        current_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-        studentCourse[courseID] = current_date.timestamp() * 1000
-    db.collection(u'app').document(u'confirm_course').update(studentCourse)
+        current_date = pytz.timezone('Asia/Taipei').localize(datetime.fromtimestamp(int(rapidTestDate)/1000.0)).replace(hour=0, minute=0, second=0, microsecond=0)
+        studentCourse[courseID] = {"courseID": courseID, "courseName": course["courseName"], "courseTeacher": course["courseTeacher"], "courseTime": course["courseTime"], "courseIsolateDate": isolateWeekDay}
+    dateString = current_date.strftime("%Y%m%d")
+    db.collection(u'confirmCourseDate').document(dateString).update(studentCourse)
     return Response(json.dumps(response_data), mimetype="application/json")
     
 
@@ -209,10 +217,13 @@ def getConfirmDate():
 
 @app.route("/get_confirm_course", methods=["GET"])
 def getConfirmCourse():
-    docs = db.collection(u'app').document(u'confirm_course').get()
-    response_data = {"status": "OK", "data": docs.to_dict()}
+    docs = db.collection(u'confirmCourseDate').stream()
+    response_data = {"status": "OK", "data": {}}
+    for doc in docs:
+        response_data["data"][doc.id] = doc.to_dict()
     return Response(json.dumps(response_data), mimetype="application/json")
 
 if __name__ == "__main__":
     test_custom_token("AIzaSyBUJBnbG2uyzHtTo0gWNHuNocfUMuXqxkU")
+    print(pytz.timezone('Asia/Taipei').localize(datetime.now()).replace(hour=0, minute=0, second=0, microsecond=0))
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

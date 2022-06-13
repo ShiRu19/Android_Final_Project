@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/confirm_course_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/confirm_course_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.5"
+        android:gravity="center|center_vertical"
+        android:maxLines="1"
+        android:paddingStart="2.5dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="2.5dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:autoSizeTextType="none"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/confirm_course_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:gravity="center|center_vertical"
+        android:maxLines="1"
+        android:paddingStart="2.5dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="2.5dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:autoSizeTextType="none"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/confirm_course_teacher"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.5"
+        android:gravity="center|center_vertical"
+        android:maxLines="1"
+        android:paddingStart="2.5dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="2.5dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:autoSizeTextType="none"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/confirm_course_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.6"
+        android:gravity="center|center_vertical"
+        android:padding="10dp"
+        android:paddingStart="2.5dp"
+        android:paddingTop="0dp"
+        android:paddingEnd="2.5dp"
+        android:paddingBottom="0dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:autoSizeTextType="none"
+        tools:text="TextView\nTextView" />
+
+</LinearLayout>

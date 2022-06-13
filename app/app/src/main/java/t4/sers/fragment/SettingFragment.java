@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,6 +32,7 @@ import java.util.Locale;
 import t4.sers.R;
 import t4.sers.activity.LobbyActivity;
 import t4.sers.activity.MainActivity;
+import t4.sers.activity.WarningLiftActivity;
 import t4.sers.adapter.SettingFragmentRecyclerViewAdapter;
 import t4.sers.placeholder.PlaceholderContent;
 
@@ -123,12 +126,16 @@ public class SettingFragment extends Fragment implements SettingFragmentRecycler
 
     @Override
     public void onItemClick(String text) {
-        if(text.equals(getString(R.string.setting_option_logout))){
-            if(getActivity() != null) {
+        if(text.equals(getString(R.string.setting_option_logout))) {
+            if (getActivity() != null) {
                 getActivity().finish();
             }
             Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);
+        }else if(text.equals("解除警示狀態")){
+            Intent intent = new Intent(getContext(), WarningLiftActivity.class);
+            startActivity(intent);
         }
     }
+
 }

@@ -16,20 +16,25 @@
     <string name="login_password">密碼</string>
     <string name="login_readme">記得我</string>
     <string name="login_login_button">登入</string>
+    <string name="setting_option_reset_warning"> 解除警示狀態 </string>
     <string name="setting_option_about_us"> 關於我們 </string>
     <string name="setting_option_logout"> 登出 </string>
 
+    <string name="lobby_menu_notification">學生確診通報</string>
     <string name="lobby_menu_notification_rapid">快篩通報</string>
     <string name="lobby_menu_notification_PCR">PCR通報</string>
-    <string name="lobby_menu_notification">學生確診通報</string>
+    <string name="lobby_menu_notification_course">課程足跡通報</string>
     <string name="lobby_menu_other_footprints">其他足跡</string>
     <string name="login_post_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/login?username=%s&amp;password=%s&amp;year=%d&amp;sem=%d </string>
     <string name="photo_post_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/login?username=%s&amp;password=%s&amp;filename=%s </string>
+    <string name="school_confirm_case_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/get_confirm_data </string>
+    <string name="confirm_course_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/get_confirm_course </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="notification_rapidAntigenTest_date">快篩陽性日期</string>
     <string name="notification_rapidAntigenTest_certificate">快篩陽性證明</string>
     <string name="notification_rapidAntigenTest_certificate_hint">請確實拍攝陽性快篩試劑</string>
     <string name="notification_PCR_result">PCR 檢測結果</string>
+
     <string name="notification_PCR_positive">陽性</string>
     <string name="notification_PCR_date">PCR陽性日期</string>
     <string name="notification_PCR_certification">PCR 陽性證明</string>
@@ -43,4 +48,15 @@
     <string name="sharedPreferences_EditText_isolation_date_end">EditText isolation end date</string>
     <string name="sharedPreferences_ImageView_PCR_certification">ImageView pcr certification</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="warning_lift_message_1"> 1. 我已進行快篩，並且為陰性。 </string>
+    <string name="warning_lift_message_2"> 2. 我會注意是否有發燒、呼吸道症狀、腹瀉、嗅／味覺異常等 Covid-19 疑似症狀，若出現症狀，會自行快篩。 </string>
+    <string name="warning_lift_message_3"> 3. 我如果快篩陽性，會佩戴醫療用口罩就醫採檢，出門時避免搭乘大眾運輸。 </string>
+    <string name="warning_lift_message_4"> 4. 我已通知同住家人有收到「接觸通知」警示，要採取適當防護措施，例如勤洗手，戴口罩等。 </string>
+    <string name="warning_lift_message_5"> 5. 我會避免非必要的家庭聚會及拜訪。 </string>
+    <string name="warning_lift_message_6"> 6. 我會避免參加無法保持社交距離及接觸不特定對象的活動。 </string>
+    <string name="warning_lift_message_7"> 7. 我會避免參加可以免戴口罩的室內活動或工作。 </string>
+    
 </resources>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.CourseFragment">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:text="確診個案匡列之課程"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/thead_course_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@color/slate_200"
+                android:gravity="clip_horizontal|center_horizontal"
+                android:maxLines="1"
+                android:paddingStart="2.5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="2.5dp"
+                android:paddingBottom="5dp"
+                android:text="課號"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/thead_course_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/slate_200"
+                android:gravity="clip_horizontal|center_horizontal"
+                android:maxLines="1"
+                android:paddingStart="2.5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="2.5dp"
+                android:paddingBottom="5dp"
+                android:text="課程名稱"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/thead_course_teacher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@color/slate_200"
+                android:gravity="clip_horizontal|center_horizontal"
+                android:maxLines="1"
+                android:paddingStart="2.5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="2.5dp"
+                android:paddingBottom="5dp"
+                android:text="教師"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/thead_course_teacher2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:background="@color/slate_200"
+                android:gravity="clip_horizontal|center_horizontal"
+                android:maxLines="1"
+                android:paddingStart="2.5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="2.5dp"
+                android:text="匡列時間"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:autoSizeTextType="uniform"
+                android:paddingBottom="5dp" />
+
+        </TableRow>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/confirm_course_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/course_confirm_table_holder" />
+        </ScrollView>
+
+    </TableLayout>
+
+</LinearLayout>
