@@ -41,6 +41,9 @@
     <string name="notification_PCR_certification_hint">請擷取\"健保快易通\"的證明畫面</string>
     <string name="notification_take_picture">上傳照片</string>
     <string name="notification_dateHint">yyyy/mm/dd</string>
+    <string name="addfootprints_dateHint">yyyy/mm/dd</string>
+    <string name="addfootprints_timeHint">hh:mm</string>
+
     <string name="nextButton">Next</string>
 
     <string name="sharedPreferences_EditText_positive_date">EditText positive date</string>

@@ -64,9 +64,9 @@
         android:id="@+id/pick_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:focusable="false"
-        android:hint="@string/notification_dateHint"
+        android:hint="@string/addfootprints_dateHint"
         android:inputType="date"
         android:maxLength="10"
         android:minHeight="48dp"
@@ -80,7 +80,7 @@
         android:id="@+id/ImageButton_footprint_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="120dp"
         android:minHeight="48dp"
         android:onClick="showDatePicker"
@@ -90,18 +90,45 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/pick_time"
+    <EditText
+        android:id="@+id/pick_time1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/text_frame_shape"
-        android:text="選擇時間"
-        android:textColor="@color/grey_500"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="7dp"
+        android:focusable="false"
+        android:hint="@string/addfootprints_timeHint"
+        android:inputType="date"
+        android:maxLength="10"
+        android:minHeight="48dp"
+        android:onClick="showTimePicker_start"
         app:layout_constraintStart_toEndOf="@+id/footprint_time"
+        app:layout_constraintTop_toBottomOf="@+id/pick_date" />
+
+    <EditText
+        android:id="@+id/pick_time2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="100dp"
+        android:focusable="false"
+        android:hint="@string/addfootprints_timeHint"
+        android:inputType="date"
+        android:maxLength="10"
+        android:minHeight="48dp"
+        android:onClick="showTimePicker_end"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ImageButton_footprint_date" />
+
+    <TextView
+        android:id="@+id/tilde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="~"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/pick_time2"
+        app:layout_constraintStart_toEndOf="@+id/pick_time1"
+        app:layout_constraintTop_toBottomOf="@+id/pick_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
