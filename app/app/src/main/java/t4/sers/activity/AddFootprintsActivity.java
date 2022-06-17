@@ -4,13 +4,20 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,7 +25,11 @@ import t4.sers.R;
 
 public class AddFootprintsActivity extends AppCompatActivity {
 
-    private EditText footprints_date,footprints_time1,footprints_time2;
+    private EditText footprints_date,footprints_time1,footprints_time2,activities,addfootprint_class,addfootprint_studentID,addfootprint_name;
+    private Spinner spinner_location;
+    private RecyclerView close_contact_recyclerview;
+    private CloseContactAdapter adapter;
+    private ArrayList<String> mData = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +38,31 @@ public class AddFootprintsActivity extends AppCompatActivity {
         footprints_date = findViewById(R.id.pick_date);
         footprints_time1 = findViewById(R.id.pick_time1);
         footprints_time2 = findViewById(R.id.pick_time2);
+        activities = findViewById(R.id.activities);
+
+        spinner_location = findViewById(R.id.spinner_location);
+        spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView parent, View view, int position, long id) {
+                String result = parent.getItemAtPosition(position).toString();
+                Toast.makeText(AddFootprintsActivity.this, result, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView parent) {
+
+            }
+        });
+
+
+        // 連結元件
+        close_contact_recyclerview = (RecyclerView) findViewById(R.id.close_contact_recyclerview);
+        // 設置RecyclerView為列表型態
+        close_contact_recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        // 設置格線
+        close_contact_recyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+
     }
     public void showDatePicker(View view) {
         Calendar calendar = Calendar.getInstance();
@@ -103,4 +139,18 @@ public class AddFootprintsActivity extends AppCompatActivity {
         toast.show();
     }
 
+    public void addStudentInfo(View view) {
+        String studentClass = ((EditText) findViewById(R.id.addfootprint_class)).getText().toString();
+        String studentID = ((EditText) findViewById(R.id.addfootprint_studentID)).getText().toString();
+        String studentName = ((EditText) findViewById(R.id.addfootprint_name)).getText().toString();
+        mData.add(studentClass+"   "+studentID+"   "+studentName);
+        // 將資料交給adapter
+        adapter = new CloseContactAdapter(mData);
+        // 設置adapter給close_contact_recyclerview
+        close_contact_recyclerview.setAdapter(adapter);
+    }
+
+    public void addfootprint_finish(View view) {
+
+    }
 }
