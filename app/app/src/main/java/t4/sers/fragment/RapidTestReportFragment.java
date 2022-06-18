@@ -131,8 +131,6 @@ public class RapidTestReportFragment extends Fragment {
 
         EditText_rapid_date.setOnClickListener(this::showDatePicker);
 
-        imgBtn_rapid_date.setOnClickListener(this::showDatePicker);
-
         btn_certification.setOnClickListener(view13 -> {
             Intent intent = new Intent();
             intent.setType("image/*");

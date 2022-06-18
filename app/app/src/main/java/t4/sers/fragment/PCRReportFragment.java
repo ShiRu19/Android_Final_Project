@@ -29,6 +29,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.shuhart.stepview.StepView;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -255,9 +258,19 @@ public class PCRReportFragment extends Fragment {
             }
         });
 
-        Btn_next.setOnClickListener(view17 -> {
+        Btn_next.setOnClickListener(view15 -> {
             saveData();
+
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.report_fragment_container, ConfirmReportFragment.newInstance()).commit();
+
+            StepView stepView = getActivity().findViewById(R.id.step_view);
+            stepView.go(3, true);
         });
+
+        //Btn_next.setOnClickListener(view17 -> {
+        //    saveData();
+        //});
         return view;
     }
     //

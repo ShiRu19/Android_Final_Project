@@ -16,25 +16,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolEpidemicReportSystem">
+        <activity
+            android:name=".ConfirmReportFragment"
+            android:exported="false" />
 
         <receiver
             android:name=".receiver.WarningReceiver"
             android:enabled="true"
             android:exported="true" />
-
         <receiver
             android:name=".receiver.UploadReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="FirebaseUpload"/>
+                <action android:name="FirebaseUpload" />
             </intent-filter>
         </receiver>
 
         <activity
             android:name=".activity.WarningLiftActivity"
             android:label="解除警示狀態" />
-
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
