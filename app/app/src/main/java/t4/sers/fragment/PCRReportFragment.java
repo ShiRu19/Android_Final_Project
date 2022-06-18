@@ -49,7 +49,6 @@ public class PCRReportFragment extends Fragment {
     private ImageButton ImgBtn_pcr_date;
 
     private Button Btn_certification;
-    private ImageButton ImgBtn_pcr_certification_delete;
     private ImageView ImgView_pcr_certification;
 
     private RadioGroup RG_isolation;
@@ -60,6 +59,8 @@ public class PCRReportFragment extends Fragment {
     private Button Btn_next;
 
     private boolean isPositive;
+    private boolean isNegative;
+    private boolean isUnknown;
     private boolean isInsulation;
     private boolean startDateFillIn;
     private boolean endDateFillIn;
@@ -75,6 +76,8 @@ public class PCRReportFragment extends Fragment {
     private static final String ET_isolation_date_end = "EditText isolation end date";
     private static final String IV_pcr_certification = "ImageView pcr certification";
     private static final String is_PCR_positive = "Is PCR positive";
+    private static final String is_PCR_negative = "Is PCR negative";
+    private static final String is_PCR_unknown = "Is PCR unknown";
     private static final String is_PCR_isolation = "Is PCR isolation";
 
     public PCRReportFragment() {
@@ -116,6 +119,8 @@ public class PCRReportFragment extends Fragment {
         });
 
         isPositive = false;
+        isNegative = false;
+        isUnknown = false;
         isInsulation = true;
         startDateFillIn = false;
         endDateFillIn = false;
@@ -133,7 +138,6 @@ public class PCRReportFragment extends Fragment {
         ImgBtn_pcr_date = view.findViewById(R.id.ImageButton_PCR_date);
 
         Btn_certification = view.findViewById(R.id.Button_PCR_certification);
-        ImgBtn_pcr_certification_delete = view.findViewById(R.id.Button_PCR_certification_delete);
         ImgView_pcr_certification = view.findViewById(R.id.ImageView_PCR_certification);
 
         RG_isolation = view.findViewById(R.id.RadioGroup_insulation);
@@ -150,10 +154,20 @@ public class PCRReportFragment extends Fragment {
         RG_pcr.setOnCheckedChangeListener((radioGroup, checkID) -> {
             if(checkID == R.id.Radio_pcr_positive) {
                 isPositive = true;
+                isNegative = false;
+                isUnknown = false;
                 LinearLayout_pcr_positive.setVisibility(View.VISIBLE);
             }
-            else {
+            else if(checkID == R.id.Radio_pcr_negative){
                 isPositive = false;
+                isNegative = true;
+                isUnknown = false;
+                LinearLayout_pcr_positive.setVisibility(View.GONE);
+            }
+            else if(checkID == R.id.Radio_pcr_unknown){
+                isPositive = false;
+                isNegative = false;
+                isUnknown = true;
                 LinearLayout_pcr_positive.setVisibility(View.GONE);
             }
             nextStatus();
@@ -180,12 +194,6 @@ public class PCRReportFragment extends Fragment {
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             activityResultLauncher.launch(intent);
-            nextStatus();
-        });
-
-        ImgBtn_pcr_certification_delete.setOnClickListener(view14 -> {
-            deleteImage();
-            isDataCorrect_pcr_certification = false;
             nextStatus();
         });
 
@@ -414,37 +422,18 @@ public class PCRReportFragment extends Fragment {
     }
 
     //
-    // 照片顯示
-    //
-    private boolean uploadImage() {
-        ImgView_pcr_certification.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ntut, null));
-        ImgView_pcr_certification.setVisibility(View.VISIBLE);
-
-        ImgBtn_pcr_certification_delete.setVisibility(View.VISIBLE);
-        return true;
-    }
-
-    //
-    // 照片清除
-    //
-    private void deleteImage() {
-        ImgBtn_pcr_certification_delete.setVisibility(View.INVISIBLE);
-        ImgView_pcr_certification.setVisibility(View.INVISIBLE);
-        ImgView_pcr_certification.setImageDrawable(null);
-    }
-
-    //
     // 儲存資料
     //
     private void saveData() {
         SharedPreferences.Editor editor = mPreferences.edit();
-        editor.clear();
         if(isPositive && isInsulation) {
             editor.putString(ET_positive_date, EditText_positive_date.getText().toString());
             editor.putString(ET_isolation_date_start, EditText_isolation_date_start.getText().toString());
             editor.putString(ET_isolation_date_end, EditText_isolation_date_end.getText().toString());
             editor.putInt(is_PCR_positive, 1);
             editor.putInt(is_PCR_isolation, 1);
+            editor.putInt(is_PCR_negative, 0);
+            editor.putInt(is_PCR_unknown, 0);
         }
         else if(isPositive) {
             editor.putString(ET_positive_date, EditText_positive_date.getText().toString());
@@ -452,15 +441,25 @@ public class PCRReportFragment extends Fragment {
             editor.putString(ET_isolation_date_end, "");
             editor.putInt(is_PCR_positive, 1);
             editor.putInt(is_PCR_isolation, 0);
+            editor.putInt(is_PCR_negative, 0);
+            editor.putInt(is_PCR_unknown, 0);
         }
-        else{
+        else {
             editor.putString(ET_positive_date, "");
             editor.putString(ET_isolation_date_start, "");
             editor.putString(ET_isolation_date_end, "");
             editor.putInt(is_PCR_positive, 0);
             editor.putInt(is_PCR_isolation, 0);
+            if(isNegative) {
+                editor.putInt(is_PCR_negative, 1);
+                editor.putInt(is_PCR_unknown, 0);
+            }
+            else if(isUnknown) {
+                editor.putInt(is_PCR_negative, 0);
+                editor.putInt(is_PCR_unknown, 1);
+            }
         }
-        editor.apply();
+        editor.commit();
     }
 
     //

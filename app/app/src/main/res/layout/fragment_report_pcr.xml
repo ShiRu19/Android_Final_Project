@@ -128,12 +128,6 @@
                             android:text="@string/notification_take_picture"
                             android:textSize="12sp" />
 
-                        <ImageButton
-                            android:id="@+id/Button_PCR_certification_delete"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_notification_delete"
-                            android:visibility="invisible" />
                     </LinearLayout>
 
                     <ImageView

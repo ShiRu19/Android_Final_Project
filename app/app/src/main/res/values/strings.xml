@@ -34,9 +34,12 @@
     <string name="notification_rapidAntigenTest_date">快篩陽性日期</string>
     <string name="notification_rapidAntigenTest_certificate">上傳快篩陽性證明</string>
     <string name="notification_rapidAntigenTest_certificate_hint">請確實拍攝陽性快篩試劑\n將個人證件置於快篩試劑左側</string>
+    <string name="notification_rapidAntigenTest_result">快篩檢測結果回報</string>
     <string name="notification_PCR_result">PCR 檢測結果回報</string>
 
     <string name="notification_PCR_positive">陽性</string>
+    <string name="notification_PCR_negative">陰性</string>
+    <string name="notification_PCR_unknown">未知</string>
     <string name="notification_PCR_date">PCR陽性日期</string>
     <string name="notification_PCR_certification">PCR 陽性證明</string>
     <string name="notification_PCR_certification_hint">請擷取\"健保快易通\"的證明畫面</string>
