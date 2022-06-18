@@ -159,7 +159,7 @@ public class PersonalFragment extends Fragment {
                         int courseWeekDay = courseObject.get("courseIsolateDate").getAsInt();
                         dateTime = dateTime.minusDays(Math.abs(dateTime.getDayOfWeek() - courseWeekDay));
                         DateTime isolateFinish = dateTime.plusDays(2);
-                        list.add(new ConfirmCourse(code, dateTime.withZone(DateTimeZone.forID("Asia/Taipei")), isolateFinish.withZone(DateTimeZone.forID("Asia/Taipei"))));
+                        list.add(new ConfirmCourse(code, "", "", dateTime.withZone(DateTimeZone.forID("Asia/Taipei")), isolateFinish.withZone(DateTimeZone.forID("Asia/Taipei"))));
                     }
                 }
                 if(getActivity() != null) {

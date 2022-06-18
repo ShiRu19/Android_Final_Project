@@ -1,7 +1,9 @@
 package t4.sers.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +26,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +40,7 @@ import t4.sers.R;
 import t4.sers.adapter.CourseConfirmTableAdapter;
 import t4.sers.adapter.CourseTableAdapter;
 import t4.sers.adapter.SchoolConfirmTableAdapter;
+import t4.sers.util.ConfirmCourse;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,10 +100,8 @@ public class CourseFragment extends Fragment {
                 String body = response.body();
                 JsonObject responseData = JsonParser.parseString(body).getAsJsonObject();
                 JsonObject dateObject = responseData.get("data").getAsJsonObject();
-                List<String> courseCode = new ArrayList<>();
-                List<String> courseName = new ArrayList<>();
-                List<String> courseTeacher = new ArrayList<>();
-                List<String> courseTime = new ArrayList<>();
+                List<ConfirmCourse> dataList = new ArrayList<>();
+                List<Integer> hashCodeList = new ArrayList<>();
                 for(String key : dateObject.keySet()){
                     DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.TAIWAN);
                     DateFormat dateFormatString = new SimpleDateFormat("MM/dd(E)", Locale.TAIWAN);
@@ -111,23 +114,26 @@ public class CourseFragment extends Fragment {
                         int courseWeekDay = courseObject.get("courseIsolateDate").getAsInt();
                         JsonArray teacherArray = courseObject.get("courseTeacher").getAsJsonArray();
                         StringBuilder teacherStringBuilder = new StringBuilder();
-                        StringBuilder timeStringBuilder = new StringBuilder();
                         for (int i = 0; i < teacherArray.size(); i++){
-                            teacherStringBuilder.append(teacherArray.get(i).getAsString()).append("\n");
+                            teacherStringBuilder.append(teacherArray.get(i).getAsString());
+                            if(i != teacherArray.size() - 1){
+                                teacherStringBuilder.append("\n");
+                            }
                         }
-                        courseCode.add(code);
-                        courseName.add(name);
-                        courseTeacher.add(teacherStringBuilder.toString());
                         dateTime = dateTime.minusDays(Math.abs(dateTime.getDayOfWeek() - courseWeekDay));
                         DateTime isolateFinish = dateTime.plusDays(2);
-                        assert date != null;
-                        courseTime.add(dateFormatString.format(dateTime.toDate()).replace("週", "") + "\n至 " + dateFormatString.format(isolateFinish.toDate()).replace("週", ""));
+                        ConfirmCourse confirmCourse = new ConfirmCourse(code, name, teacherStringBuilder.toString(), dateTime, isolateFinish);
+                        if(!hashCodeList.contains(confirmCourse.hashCode())) {
+                            dataList.add(confirmCourse);
+                            hashCodeList.add(confirmCourse.hashCode());
+                        }
                     }
                 }
                 if(getActivity() != null) {
                     getActivity().runOnUiThread(() -> {
+                        Collections.sort(dataList, (confirmCourse, t1) -> confirmCourse.getRiskDurationStart().isAfter(t1.getRiskDurationStart()) ? -1 : confirmCourse.getRiskDurationStart().isEqual(t1.getRiskDurationStart()) ? 0 : 1);
                         RecyclerView confirmDataRecyclerView = getActivity().findViewById(R.id.confirm_course_recycler_view);
-                        confirmDataRecyclerView.setAdapter(new CourseConfirmTableAdapter(getActivity(), courseCode, courseName, courseTeacher, courseTime));
+                        confirmDataRecyclerView.setAdapter(new CourseConfirmTableAdapter(getActivity(), dataList));
                         confirmDataRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                     });
                 }

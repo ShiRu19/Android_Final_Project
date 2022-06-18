@@ -14,23 +14,18 @@ import java.util.List;
 
 import t4.sers.R;
 import t4.sers.placeholder.CourseConfirmTableHolder;
+import t4.sers.util.ConfirmCourse;
 
 public class CourseConfirmTableAdapter extends RecyclerView.Adapter<CourseConfirmTableHolder> {
 
     private final LayoutInflater mInflater;
-    private final List<String> code;
-    private final List<String> name;
-    private final List<String> teacher;
-    private final List<String> date;
+    private final List<ConfirmCourse> list;
     private final Context context;
 
-    public CourseConfirmTableAdapter(Context context, List<String> code, List<String> name, List<String> teacher, List<String> date){
+    public CourseConfirmTableAdapter(Context context, List<ConfirmCourse> list){
         this.mInflater = LayoutInflater.from(context);
         this.context = context;
-        this.code = code;
-        this.name = name;
-        this.date = date;
-        this.teacher = teacher;
+        this.list = list;
     }
 
     @NonNull
@@ -43,14 +38,14 @@ public class CourseConfirmTableAdapter extends RecyclerView.Adapter<CourseConfir
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull CourseConfirmTableHolder holder, int position) {
-        holder.confirmCourseCode.setText(code.get(position));
-        holder.confirmCourseName.setText(name.get(position));
-        holder.confirmCourseTeacher.setText(teacher.get(position));
-        holder.confirmCourseDate.setText(date.get(position));
+        holder.confirmCourseCode.setText(list.get(position).getCode());
+        holder.confirmCourseName.setText(list.get(position).getName());
+        holder.confirmCourseTeacher.setText(list.get(position).getTeacher());
+        holder.confirmCourseDate.setText(list.get(position).getDurationTime());
     }
 
     @Override
     public int getItemCount() {
-        return code.size();
+        return list.size();
     }
 }

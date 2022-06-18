@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -133,7 +134,7 @@ public class SchoolFragment extends Fragment {
                     long confirmDate = dataObject.get("confirmDate").getAsLong();
                     Date date = new Date(confirmDate);
                     Date current = new Date();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.TAIWAN);
                     indexList.add(String.valueOf(i+1));
                     uuidList.add(ID);
                     studentClassList.add(studentClass);
