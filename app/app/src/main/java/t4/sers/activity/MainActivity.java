@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         Alerter.create(MainActivity.this)
                 .setTitle("登入中")
                 .setText("請稍後...")
-                .setDuration(4000)
+                .enableInfiniteDuration(true)
                 .enableProgress(true)
                 .disableOutsideTouch()
                 .show();

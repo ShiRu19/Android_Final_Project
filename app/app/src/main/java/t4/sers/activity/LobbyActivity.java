@@ -95,9 +95,9 @@ public class LobbyActivity extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.debug) {
-                Debug debugFragment = Debug.newInstance("bla", "use");
-                getSupportActionBar().setTitle("測試用");
-                fragmentManager.replace(R.id.fragmentContainerView, debugFragment).commit();
+                Debug debug = Debug.newInstance();
+                getSupportActionBar().setTitle("測試");
+                fragmentManager.replace(R.id.fragmentContainerView, debug).commit();
                 return true;
             }
             if (item.getItemId() == R.id.school) {
@@ -157,6 +157,11 @@ public class LobbyActivity extends AppCompatActivity {
         else if (id == R.id.action_other_footprints) {
             Intent intent = new Intent(this, OtherFootprintsActivity.class);
             startActivity(intent);
+            return true;
+        }
+        else if (id == R.id.action_report){
+            Intent reportIntent = new Intent(this, ReportActivity.class);
+            startActivity(reportIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);

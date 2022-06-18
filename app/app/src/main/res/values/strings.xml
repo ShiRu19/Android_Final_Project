@@ -6,6 +6,7 @@
     <string name="course_bottom_navigation_text">班級</string>
     <string name="setting_bottom_navigation_text">設定</string>
     <string name="debug_bottom_navigation_text">測試頁面</string>
+    <string name="report_bottom_navigation_text">新增通報</string>
 
     <string name="setting_logout_text"> 登出 </string>
 
@@ -31,9 +32,9 @@
     <string name="confirm_course_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/get_confirm_course </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="notification_rapidAntigenTest_date">快篩陽性日期</string>
-    <string name="notification_rapidAntigenTest_certificate">快篩陽性證明</string>
-    <string name="notification_rapidAntigenTest_certificate_hint">請確實拍攝陽性快篩試劑</string>
-    <string name="notification_PCR_result">PCR 檢測結果</string>
+    <string name="notification_rapidAntigenTest_certificate">上傳快篩陽性證明</string>
+    <string name="notification_rapidAntigenTest_certificate_hint">請確實拍攝陽性快篩試劑\n將個人證件置於快篩試劑左側</string>
+    <string name="notification_PCR_result">PCR 檢測結果回報</string>
 
     <string name="notification_PCR_positive">陽性</string>
     <string name="notification_PCR_date">PCR陽性日期</string>
@@ -41,7 +42,7 @@
     <string name="notification_PCR_certification_hint">請擷取\"健保快易通\"的證明畫面</string>
     <string name="notification_take_picture">上傳照片</string>
     <string name="notification_dateHint">yyyy/mm/dd</string>
-    <string name="nextButton">Next</string>
+    <string name="nextButton">下一步</string>
 
     <string name="sharedPreferences_EditText_positive_date">EditText positive date</string>
     <string name="sharedPreferences_EditText_isolation_date_start">EditText isolation start date</string>
@@ -58,5 +59,5 @@
     <string name="warning_lift_message_5"> 5. 我會避免非必要的家庭聚會及拜訪。 </string>
     <string name="warning_lift_message_6"> 6. 我會避免參加無法保持社交距離及接觸不特定對象的活動。 </string>
     <string name="warning_lift_message_7"> 7. 我會避免參加可以免戴口罩的室內活動或工作。 </string>
-    
+
 </resources>

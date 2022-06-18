@@ -21,8 +21,6 @@ public class OtherFootprintsActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass( OtherFootprintsActivity.this, AddFootprintsActivity.class);
                 startActivity(intent);
-
-
             }
         });
     }
