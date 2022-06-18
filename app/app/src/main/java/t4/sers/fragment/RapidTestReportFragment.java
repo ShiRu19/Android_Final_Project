@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -18,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +55,7 @@ public class RapidTestReportFragment extends Fragment {
     private boolean imageCompleted = false;
 
     private SharedPreferences mPreferences;
-    private static final String ET_rapid_date = "EditText rapid test positive date";
+    private static final String ET_rapid_date = "EditTextRapidTestPositiveDate";
     private static final String IV_rapid_certification = "ImageView rapid certification";
 
 
@@ -80,9 +82,7 @@ public class RapidTestReportFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_report_rapid, container, false);
 
         EditText_rapid_date = view.findViewById(R.id.EditText_rapidAntigenTest_date);
-        ImageButton imgBtn_rapid_date = view.findViewById(R.id.ImageButton_rapidAntigenTest_date);
         Button btn_certification = view.findViewById(R.id.Button_rapidAntigenTest_certification);
-        ImgBtn_rapid_certification_delete = view.findViewById(R.id.Button_rapidAntigenTest_certification_delete);
         ImgView_rapid_certification = view.findViewById(R.id.ImageView_rapidAntigenTest_certification);
         Btn_next = view.findViewById(R.id.Button_next_rapid);
 
@@ -131,8 +131,6 @@ public class RapidTestReportFragment extends Fragment {
 
         EditText_rapid_date.setOnClickListener(this::showDatePicker);
 
-        imgBtn_rapid_date.setOnClickListener(this::showDatePicker);
-
         btn_certification.setOnClickListener(view13 -> {
             Intent intent = new Intent();
             intent.setType("image/*");
@@ -141,14 +139,12 @@ public class RapidTestReportFragment extends Fragment {
             checkAllDataCompleted();
         });
 
-        ImgBtn_rapid_certification_delete.setOnClickListener(view14 -> {
-            deleteImage();
-            imageCompleted = false;
-            checkAllDataCompleted();
-        });
-
         Btn_next.setOnClickListener(view15 -> {
             saveData();
+
+            String s = mPreferences.getString(ET_rapid_date, "error");
+
+            Log.d("mp=======", s);
 
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.report_fragment_container, PCRReportFragment.newInstance()).commit();
@@ -199,20 +195,12 @@ public class RapidTestReportFragment extends Fragment {
     }
 
     //
-    // 照片清除
-    //
-    public void deleteImage() {
-        ImgBtn_rapid_certification_delete.setVisibility(View.INVISIBLE);
-        ImgView_rapid_certification.setVisibility(View.INVISIBLE);
-        ImgView_rapid_certification.setImageDrawable(null);
-    }
-
-    //
     // 儲存資料
     //
     private void saveData() {
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(ET_rapid_date, EditText_rapid_date.getText().toString());
-        editor.apply();
+        //editor.apply();
+        editor.commit();
     }
 }
