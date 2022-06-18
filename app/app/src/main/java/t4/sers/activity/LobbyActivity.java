@@ -118,7 +118,7 @@ public class LobbyActivity extends AppCompatActivity {
         createNotificationChannel();
 
         Intent notifyIntent = new Intent(this, WarningReceiver.class);
-        PendingIntent notifyPendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent notifyPendingIntent = PendingIntent.getBroadcast(this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long repeatInterval = AlarmManager.INTERVAL_FIFTEEN_MINUTES;
