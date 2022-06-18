@@ -14,4 +14,14 @@
         <item>@drawable/ic_outline_auto_awesome_24</item>
         <item>@drawable/ic_baseline_logout_24</item>
     </array>
+    <string-array name="spinner_location">
+        <item>圖書館</item>
+        <item>教務處</item>
+        <item>學務處</item>
+        <item>學生餐廳-綠光庭園</item>
+        <item>學生餐廳-宿舍</item>
+        <item>便利商店-711</item>
+        <item>中正館</item>
+        <item></item>
+    </string-array>
 </resources>

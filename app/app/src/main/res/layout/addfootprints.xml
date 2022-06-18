@@ -64,9 +64,9 @@
         android:id="@+id/pick_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:focusable="false"
-        android:hint="@string/notification_dateHint"
+        android:hint="@string/addfootprints_dateHint"
         android:inputType="date"
         android:maxLength="10"
         android:minHeight="48dp"
@@ -80,7 +80,7 @@
         android:id="@+id/ImageButton_footprint_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="120dp"
         android:minHeight="48dp"
         android:onClick="showDatePicker"
@@ -90,18 +90,186 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/pick_time"
+    <EditText
+        android:id="@+id/pick_time1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/text_frame_shape"
-        android:text="選擇時間"
-        android:textColor="@color/grey_500"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="7dp"
+        android:focusable="false"
+        android:hint="@string/addfootprints_timeHint"
+        android:inputType="date"
+        android:maxLength="10"
+        android:minHeight="48dp"
+        android:onClick="showTimePicker_start"
         app:layout_constraintStart_toEndOf="@+id/footprint_time"
+        app:layout_constraintTop_toBottomOf="@+id/pick_date" />
+
+    <EditText
+        android:id="@+id/pick_time2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="100dp"
+        android:focusable="false"
+        android:hint="@string/addfootprints_timeHint"
+        android:inputType="date"
+        android:maxLength="10"
+        android:minHeight="48dp"
+        android:onClick="showTimePicker_end"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ImageButton_footprint_date" />
+
+    <TextView
+        android:id="@+id/tilde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:text="~"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/pick_time2"
+        app:layout_constraintStart_toEndOf="@+id/pick_time1"
+        app:layout_constraintTop_toBottomOf="@+id/pick_date" />
+
+    <Spinner
+        android:id="@+id/spinner_location"
+        android:layout_width="155dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:entries="@array/spinner_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/footprint_location"
+        app:layout_constraintTop_toBottomOf="@+id/pick_time1" />
+
+    <EditText
+        android:id="@+id/activities"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="22dp"
+        android:maxLength="10"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/footprint_activities"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_location" />
+
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="380dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="170dp"
+        android:layout_marginEnd="16dp"
+        android:paddingLeft="@dimen/alerter_activity_horizontal_margin"
+        android:paddingTop="@dimen/alerter_activity_vertical_margin"
+        android:paddingRight="@dimen/alerter_activity_horizontal_margin"
+        android:paddingBottom="@dimen/alerter_activity_vertical_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/close_contacts">
+
+        <view
+            android:id="@+id/close_contact_recyclerview"
+            class="androidx.recyclerview.widget.RecyclerView"
+            android:layout_width="362dp"
+            android:layout_height="234dp" />
+
+        <Button
+            android:id="@+id/addfootprint_finish_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="88dp"
+            android:onClick="addfootprint_finish"
+            android:text="完成" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView_class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="班級:"
+        app:layout_constraintEnd_toStartOf="@+id/textView_studentID"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/close_contacts" />
+
+    <TextView
+        android:id="@+id/textView_studentID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
+        android:text="學號:"
+        app:layout_constraintEnd_toStartOf="@+id/textView_name"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView_class"
+        app:layout_constraintTop_toBottomOf="@+id/activities" />
+
+    <TextView
+        android:id="@+id/textView_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
+        android:text="姓名:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView_studentID"
+        app:layout_constraintTop_toBottomOf="@+id/activities" />
+
+    <EditText
+        android:id="@+id/addfootprint_class"
+        android:layout_width="90dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        android:maxLength="10"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/addfootprint_studentID"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_class" />
+
+    <EditText
+        android:id="@+id/addfootprint_studentID"
+        android:layout_width="90dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:maxLength="10"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/addfootprint_name"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/addfootprint_class"
+        app:layout_constraintTop_toBottomOf="@+id/textView_studentID" />
+
+    <EditText
+        android:id="@+id/addfootprint_name"
+        android:layout_width="90dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        android:maxLength="10"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/addfootprint_studentID"
+        app:layout_constraintTop_toBottomOf="@+id/textView_name" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="addStudentInfo"
+        android:text="新增"
+        app:layout_constraintBottom_toTopOf="@+id/activity_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addfootprint_studentID" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
