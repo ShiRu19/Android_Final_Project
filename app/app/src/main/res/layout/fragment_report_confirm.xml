@@ -2,20 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout4"
+    android:id="@+id/frameLayout10"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="30dp"
     android:scrollbars="vertical"
+    android:orientation="vertical"
     tools:context=".fragment.SettingFragment$studentNotificationCourse">
+
+    <TextView
+        android:id="@+id/textView_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="資料上傳確認"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:autoSizeMaxTextSize="24sp"
+        app:autoSizeTextType="uniform" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="?android:attr/listDivider" />
 
     <TextView
         android:id="@+id/textView_rapidAntigenTest_certificate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="填寫快篩陽性日期"
+        android:gravity="center_horizontal"
+        android:text="快篩陽性日期"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -57,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:gravity="center_vertical"
+        android:gravity="center_horizontal"
         android:text="@string/notification_rapidAntigenTest_certificate"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -71,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:gravity="center_vertical"
+        android:gravity="center_horizontal"
         android:text="@string/notification_rapidAntigenTest_certificate_hint"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -110,13 +130,5 @@
         android:layout_marginBottom="15dp"
         android:layout_weight="30"
         android:visibility="visible" />
-
-    <Button
-        android:id="@+id/Button_next_rapid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/enable_button"
-        android:enabled="false"
-        android:text="@string/nextButton" />
 
 </LinearLayout>
