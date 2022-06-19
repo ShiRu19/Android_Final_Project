@@ -26,6 +26,8 @@
     <string name="lobby_menu_notification_PCR">PCR通報</string>
     <string name="lobby_menu_notification_course">課程足跡通報</string>
     <string name="lobby_menu_other_footprints">其他足跡</string>
+    <string name="lobby_menu_add_footprints">新增足跡</string>
+    <string name="lobby_menu_finish_footprints">其他足跡完成</string>
     <string name="login_post_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/login?username=%s&amp;password=%s&amp;year=%d&amp;sem=%d </string>
     <string name="photo_post_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/login?username=%s&amp;password=%s&amp;filename=%s </string>
     <string name="school_confirm_case_URL" translatable="false"> https://sers-backend-xyvgk4v6da-de.a.run.app/get_confirm_data </string>

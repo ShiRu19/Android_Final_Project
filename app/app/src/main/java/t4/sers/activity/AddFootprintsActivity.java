@@ -164,7 +164,7 @@ public class AddFootprintsActivity extends AppCompatActivity {
         String studentClass = ((EditText) findViewById(R.id.addfootprint_class)).getText().toString();
         String studentID = ((EditText) findViewById(R.id.addfootprint_studentID)).getText().toString();
         String studentName = ((EditText) findViewById(R.id.addfootprint_name)).getText().toString();
-        mData.add(studentClass+"   "+studentID+"   "+studentName);
+        mData.add(studentClass+"         "+studentID+"         "+studentName);
         // 將資料交給adapter
         adapter = new CloseContactAdapter(mData);
         // 設置adapter給close_contact_recyclerview

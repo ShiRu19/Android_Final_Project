@@ -62,10 +62,16 @@
             android:label="@string/lobby_menu_notification" />
         <activity
             android:name=".activity.OtherFootprintsActivity"
-            android:label="@string/lobby_menu_notification" />
+            android:windowSoftInputMode="adjustPan"
+            android:label="@string/lobby_menu_other_footprints" />
         <activity
             android:name=".activity.AddFootprintsActivity"
-            android:label="@string/lobby_menu_notification" />
+            android:windowSoftInputMode="adjustPan"
+            android:label="@string/lobby_menu_add_footprints" />
+        <activity
+            android:name=".activity.OtherFootprintsFinish"
+            android:windowSoftInputMode="adjustPan"
+            android:label="@string/lobby_menu_finish_footprints" />
     </application>
 
 </manifest>
