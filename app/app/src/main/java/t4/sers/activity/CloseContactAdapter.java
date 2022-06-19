@@ -3,7 +3,9 @@ package t4.sers.activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,11 +25,33 @@ public class CloseContactAdapter extends RecyclerView.Adapter<CloseContactAdapte
     class ViewHolder extends RecyclerView.ViewHolder{
         // 宣告元件
         private TextView txtItem1;
+        private Button btnRemove;
 
         ViewHolder(View itemView) {
             super(itemView);
             txtItem1 = (TextView) itemView.findViewById(R.id.txtItem1);
+            btnRemove = (Button) itemView.findViewById(R.id.btnRemove);
+            // 點擊項目時
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Toast.makeText(view.getContext(), "click " +getAbsoluteAdapterPosition(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            // 點擊項目中的Button時
+            btnRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //刪除功能
+                    removeItem(getAbsoluteAdapterPosition());
+                }
+
+            });
         }
+    }
+    public void removeItem(int position){
+        mData.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override

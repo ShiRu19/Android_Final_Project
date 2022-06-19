@@ -53,15 +53,12 @@ public class AddFootprintsActivity extends AppCompatActivity {
 
             }
         });
-
-
         // 連結元件
         close_contact_recyclerview = (RecyclerView) findViewById(R.id.close_contact_recyclerview);
         // 設置RecyclerView為列表型態
         close_contact_recyclerview.setLayoutManager(new LinearLayoutManager(this));
         // 設置格線
         close_contact_recyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-
 
     }
     public void showDatePicker(View view) {
@@ -99,10 +96,28 @@ public class AddFootprintsActivity extends AppCompatActivity {
         new TimePickerDialog(AddFootprintsActivity.this, new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                h1=hourOfDay;
-                m1=minute;
                 String mTime1 = String.valueOf(hourOfDay) + " : " + String.valueOf(minute);
-                footprints_time1.setText(mTime1);// 填入結果
+                if(h1== 0 && m1== 0 && h2==0 && m2==0){
+                    h1=hourOfDay;
+                    m1=minute;
+                    footprints_time1.setText(mTime1);// 皆未輸入
+                }
+                else if((h1!= 0 || m1!= 0) && h2==0 && m2==0){
+                    h1=hourOfDay;
+                    m1=minute;
+                    footprints_time1.setText(mTime1);// 重複輸入h1m1
+                }
+                else if(h2!= 0 || m2!=0){
+                    h1=hourOfDay;
+                    m1=minute;
+                    if(h2> h1 || h1== h2 && m2> m1){
+                        footprints_time1.setText(mTime1);//更改h1m1
+                    }
+                    else{
+                        hint();}
+                }
+                else{
+                    hint();}
             }
 
         }, hour, min, true).show();
@@ -114,20 +129,28 @@ public class AddFootprintsActivity extends AppCompatActivity {
         new TimePickerDialog(AddFootprintsActivity.this, new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                h2=hourOfDay;
-                m2=minute;
                 String mTime2 = String.valueOf(hourOfDay) + " : " + String.valueOf(minute);
-                if(h1<h2){
-                    footprints_time2.setText(mTime2);// 填入結果
+                if(h1== 0 && m1== 0 && h2==0 && m2==0){
+                    h2=hourOfDay;
+                    m2=minute;
+                    footprints_time2.setText(mTime2);//皆未輸入
                 }
-                else if(h1==h2 & m1<m2){
-                    footprints_time2.setText(mTime2);// 填入結果
+                else if((h1== 0 || m1== 0) && h2!=0 && m2!=0){
+                    h2=hourOfDay;
+                    m2=minute;
+                    footprints_time2.setText(mTime2);//重複輸入h2m2
+                }
+                else if(h1!= 0 || m1!= 0){
+                    h2=hourOfDay;
+                    m2=minute;
+                    if(h2> h1 || h1== h2 && m2> m1){
+                        footprints_time2.setText(mTime2);// 填入結果
+                    }
+                    else{
+                        hint();}
                 }
                 else{
-                    hint();
-                    mTime2 = "    "+" : ";
-                    footprints_time2.setText(mTime2);
-                }
+                    hint();}
             }
         }, hour, min, true).show();
     }

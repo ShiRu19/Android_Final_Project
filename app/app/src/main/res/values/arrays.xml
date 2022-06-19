@@ -18,10 +18,12 @@
         <item>圖書館</item>
         <item>教務處</item>
         <item>學務處</item>
+        <item>宿舍</item>
         <item>學生餐廳-綠光庭園</item>
         <item>學生餐廳-宿舍</item>
         <item>便利商店-711</item>
         <item>中正館</item>
-        <item></item>
+        <item>共同科館</item>
+        <item>綜合科館</item>
     </string-array>
 </resources>

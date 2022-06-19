@@ -158,31 +158,32 @@
 
     <RelativeLayout
         android:id="@+id/activity_main"
-        android:layout_width="380dp"
+        android:layout_width="350dp"
         android:layout_height="250dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:paddingLeft="@dimen/alerter_activity_horizontal_margin"
         android:paddingTop="@dimen/alerter_activity_vertical_margin"
         android:paddingRight="@dimen/alerter_activity_horizontal_margin"
         android:paddingBottom="@dimen/alerter_activity_vertical_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/close_contacts">
+        app:layout_constraintTop_toBottomOf="@+id/button5">
 
         <view
             android:id="@+id/close_contact_recyclerview"
             class="androidx.recyclerview.widget.RecyclerView"
-            android:layout_width="362dp"
-            android:layout_height="234dp" />
+            android:layout_width="356dp"
+            android:layout_height="270dp" />
 
         <Button
             android:id="@+id/addfootprint_finish_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="88dp"
+            android:layout_alignParentBottom="true"
             android:onClick="addfootprint_finish"
             android:text="完成" />
 
@@ -192,7 +193,7 @@
         android:id="@+id/textView_class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="班級:"
         app:layout_constraintEnd_toStartOf="@+id/textView_studentID"
         app:layout_constraintHorizontal_bias="0.5"
@@ -203,7 +204,7 @@
         android:id="@+id/textView_studentID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
+        android:layout_marginTop="52dp"
         android:text="學號:"
         app:layout_constraintEnd_toStartOf="@+id/textView_name"
         app:layout_constraintHorizontal_bias="0.5"
@@ -214,7 +215,7 @@
         android:id="@+id/textView_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
+        android:layout_marginTop="52dp"
         android:text="姓名:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -263,12 +264,10 @@
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
         android:onClick="addStudentInfo"
         android:text="新增"
-        app:layout_constraintBottom_toTopOf="@+id/activity_main"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addfootprint_studentID" />
 
