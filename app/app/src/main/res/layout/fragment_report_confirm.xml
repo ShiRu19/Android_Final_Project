@@ -115,8 +115,8 @@
                 <ImageView
                     android:id="@+id/ImageView_rapidAntigenTest_certification"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="30"
                     android:visibility="visible" />
@@ -214,8 +214,8 @@
                     <ImageView
                         android:id="@+id/ImageView_PCR_certification"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="15dp"
                         android:layout_weight="30"
                         android:visibility="visible" />

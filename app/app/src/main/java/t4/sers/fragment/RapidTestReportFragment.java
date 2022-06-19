@@ -46,6 +46,7 @@ public class RapidTestReportFragment extends Fragment {
 
     private ImageButton ImgBtn_rapid_certification_delete;
     private ImageView ImgView_rapid_certification;
+    private Uri selectedImageUri;
 
     private Button Btn_next;
 
@@ -90,7 +91,7 @@ public class RapidTestReportFragment extends Fragment {
             if(result.getResultCode() == Activity.RESULT_OK){
                 Intent data = result.getData();
                 if(data != null && data.getData() != null){
-                    Uri selectedImageUri = data.getData();
+                    selectedImageUri = data.getData();
                     Bitmap selectedImageBitmap = null;
                     try {
                         selectedImageBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImageUri);
@@ -211,6 +212,7 @@ public class RapidTestReportFragment extends Fragment {
     private void saveData() {
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(ET_rapid_date, EditText_rapid_date.getText().toString());
-        editor.apply();
+        editor.putString(IV_rapid_certification, selectedImageUri.toString());
+        editor.commit();
     }
 }

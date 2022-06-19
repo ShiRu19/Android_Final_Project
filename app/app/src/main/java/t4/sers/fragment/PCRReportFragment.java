@@ -53,6 +53,7 @@ public class PCRReportFragment extends Fragment {
 
     private Button Btn_certification;
     private ImageView ImgView_pcr_certification;
+    private Uri selectedImageUri;
 
     private RadioGroup RG_isolation;
     private RadioButton RB_insulation_yes;
@@ -105,7 +106,7 @@ public class PCRReportFragment extends Fragment {
             if(result.getResultCode() == Activity.RESULT_OK){
                 Intent data = result.getData();
                 if(data != null && data.getData() != null){
-                    Uri selectedImageUri = data.getData();
+                    selectedImageUri = data.getData();
                     Bitmap selectedImageBitmap = null;
                     try {
                         selectedImageBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImageUri);
@@ -441,6 +442,7 @@ public class PCRReportFragment extends Fragment {
         SharedPreferences.Editor editor = mPreferences.edit();
         if(isPositive && isInsulation) {
             editor.putString(ET_positive_date, EditText_positive_date.getText().toString());
+            editor.putString(IV_pcr_certification, selectedImageUri.toString());
             editor.putString(ET_isolation_date_start, EditText_isolation_date_start.getText().toString());
             editor.putString(ET_isolation_date_end, EditText_isolation_date_end.getText().toString());
             editor.putInt(is_PCR_positive, 1);
@@ -450,6 +452,7 @@ public class PCRReportFragment extends Fragment {
         }
         else if(isPositive) {
             editor.putString(ET_positive_date, EditText_positive_date.getText().toString());
+            editor.putString(IV_pcr_certification, selectedImageUri.toString());
             editor.putString(ET_isolation_date_start, "");
             editor.putString(ET_isolation_date_end, "");
             editor.putInt(is_PCR_positive, 1);

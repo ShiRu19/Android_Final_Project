@@ -4,16 +4,23 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 import t4.sers.R;
 
@@ -27,6 +34,7 @@ public class ConfirmReportFragment extends Fragment {
     private static final String ET_rapid_date = "EditText rapid test positive date";
     private static final String IV_rapid_certification = "ImageView rapid certification";
     private static final String ET_positive_date = "EditText pcr positive date";
+    private static final String IV_pcr_certification = "ImageView pcr certification";
     private static final String ET_isolation_date_start = "EditText isolation start date";
     private static final String ET_isolation_date_end = "EditText isolation end date";
     private static final String is_PCR_positive = "Is PCR positive";
@@ -55,6 +63,8 @@ public class ConfirmReportFragment extends Fragment {
         TextView TextView_PCR_isolation_startDate = view.findViewById(R.id.TextView_PCR_isolation_startDate);
         TextView TextView_PCR_isolation_endDate = view.findViewById(R.id.TextView_PCR_isolation_endDate);
 
+        ImageView ImageView_rapid_certification = view.findViewById(R.id.ImageView_rapidAntigenTest_certification);
+        ImageView ImageView_PCR_certification = view.findViewById(R.id.ImageView_PCR_certification);
 
         LinearLayout LinearLayout_PCR_positive = view.findViewById(R.id.linearLayout_pcr_positive);
         LinearLayout LinearLayout_PCR_negative = view.findViewById(R.id.linearLayout_pcr_negative);
@@ -70,6 +80,15 @@ public class ConfirmReportFragment extends Fragment {
 
             // 快篩
             TextView_rapid_date.setText(mPreferences.getString(ET_rapid_date, "error"));
+            Uri selectedImageUri_rapid = Uri.parse(mPreferences.getString(IV_rapid_certification, ""));
+            Bitmap selectedImageBitmap_rapid = null;
+            try {
+                selectedImageBitmap_rapid = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImageUri_rapid);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ImageView_rapid_certification.setImageBitmap(selectedImageBitmap_rapid);
+            ImageView_rapid_certification.setTag(selectedImageUri_rapid.toString());
 
             // PCR
             int isPcrPositive = mPreferences.getInt(is_PCR_positive, -1);
@@ -82,6 +101,17 @@ public class ConfirmReportFragment extends Fragment {
                 LinearLayout_PCR_negative.setVisibility(View.GONE);
                 LinearLayout_PCR_unknown.setVisibility(View.GONE);
                 TextView_PCR_date.setText(mPreferences.getString(ET_positive_date, "error"));
+
+                Uri selectedImageUri_PCR = Uri.parse(mPreferences.getString(IV_pcr_certification, ""));
+                Bitmap selectedImageBitmap_PCR = null;
+                try {
+                    selectedImageBitmap_PCR = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImageUri_PCR);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                ImageView_PCR_certification.setImageBitmap(selectedImageBitmap_PCR);
+                ImageView_PCR_certification.setTag(selectedImageUri_PCR.toString());
+
                 if(isIsolation == 1) {
                     LinearLayout_isolation_yes.setVisibility(View.VISIBLE);
                     LinearLayout_isolation_no.setVisibility(View.GONE);
