@@ -2,6 +2,7 @@ package t4.sers.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.graphics.Bitmap;
@@ -45,6 +46,10 @@ public class ConfirmReportFragment extends Fragment {
     private static final String is_PCR_unknown = "Is PCR unknown";
     private static final String is_PCR_isolation = "Is PCR isolation";
 
+    private Button uploadButton;
+
+    SharedPreferences mPreferences;
+
     public ConfirmReportFragment() {
         // Required empty public constructor
     }
@@ -78,7 +83,6 @@ public class ConfirmReportFragment extends Fragment {
         Button button_next_view = view.findViewById(R.id.Button_next_confirm);
 
         String sharedPrefFile = "t4.sers.activity.positivesharedprefs";
-        SharedPreferences mPreferences;
 
         if(getActivity() != null) {
             mPreferences = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);

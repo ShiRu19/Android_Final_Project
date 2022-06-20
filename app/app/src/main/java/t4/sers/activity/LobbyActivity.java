@@ -5,26 +5,22 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tapadoo.alerter.Alerter;
 
 import t4.sers.R;
 import t4.sers.fragment.CourseFragment;
-import t4.sers.fragment.Debug;
 import t4.sers.fragment.PersonalFragment;
 import t4.sers.fragment.SchoolFragment;
 import t4.sers.fragment.SettingFragment;
@@ -51,30 +47,18 @@ public class LobbyActivity extends AppCompatActivity {
         getSupportActionBar().show();
 
         Intent intent = getIntent();
+        SharedPreferences loginPreference = getSharedPreferences("loginPref", MODE_PRIVATE);
 
-        studentName = intent.getStringExtra("studentName");
-        studentCourse = intent.getStringExtra("studentCourse");
-        studentPhoto = intent.getStringExtra("imageURI");
-        studentEmail = intent.getStringExtra("studentEmail");
+        studentName = loginPreference.getString("studentName", "");
+        studentCourse = loginPreference.getString("courseDataJson", "");
+        studentPhoto = loginPreference.getString("imageURI", "");
+        studentEmail = loginPreference.getString("studentEmail", "");
 
         Alerter.create(LobbyActivity.this)
                 .setBackgroundColorRes(R.color.green_500)
-                .setTitle("登入成功！")
-                .setText("Hello, " + intent.getStringExtra("studentName"))
+                .setTitle("歡迎！")
+                .setText("Hello, " + studentName)
                 .show();
-
-        /* 一個 Firebase 登入的範例 */
-        /* TODO: 寫一個 Util 來方便使用寫入、讀取資料的功能 */
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        DocumentReference documentReference = firebaseFirestore.collection("app").document("version");
-        documentReference.get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                DocumentSnapshot documentSnapshot = task.getResult();
-                Log.d("Firestore", "App version = " + documentSnapshot.getData());
-            }else{
-                Log.d("Firestore", "Cached get failed: ", task.getException());
-            }
-        });
 
         getSupportActionBar().setTitle("個人防疫資訊");
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, PersonalFragment.newInstance(studentCourse, "")).commit();
@@ -92,12 +76,6 @@ public class LobbyActivity extends AppCompatActivity {
                 SettingFragment settingFragment = SettingFragment.newInstance(studentName, studentPhoto, studentEmail);
                 getSupportActionBar().setTitle("設定");
                 fragmentManager.replace(R.id.fragmentContainerView, settingFragment).commit();
-                return true;
-            }
-            if (item.getItemId() == R.id.debug) {
-                Debug debug = Debug.newInstance();
-                getSupportActionBar().setTitle("測試");
-                fragmentManager.replace(R.id.fragmentContainerView, debug).commit();
                 return true;
             }
             if (item.getItemId() == R.id.school) {
@@ -169,14 +147,10 @@ public class LobbyActivity extends AppCompatActivity {
 
     public void createNotificationChannel() {
 
-        // Create a notification manager object.
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-        // Notification channels are only available in OREO and higher.
-        // So, add a check on SDK version.
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
-            // Create the NotificationChannel with all the parameters.
             NotificationChannel notificationChannel = new NotificationChannel(PRIMARY_CHANNEL_ID, "社交距離通知", NotificationManager.IMPORTANCE_HIGH);
 
             notificationChannel.enableLights(true);

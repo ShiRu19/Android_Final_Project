@@ -93,7 +93,8 @@ public class PersonalFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            courseDataJson = getArguments().getString(ARG_PARAM1);
+            SharedPreferences loginPreferenceEditor = getActivity().getSharedPreferences("loginPref", MODE_PRIVATE);
+            courseDataJson = loginPreferenceEditor.getString("courseDataJson", "{}");
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }

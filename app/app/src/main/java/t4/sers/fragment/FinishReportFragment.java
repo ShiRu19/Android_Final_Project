@@ -39,6 +39,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import t4.sers.R;
+import t4.sers.activity.LobbyActivity;
+import t4.sers.activity.ReportActivity;
 import t4.sers.util.FirebaseUpload;
 import t4.sers.util.HashUtil;
 
@@ -154,6 +156,10 @@ public class FinishReportFragment extends Fragment {
 
         dataUpload(HashUtil.hash(studentID), map, R.id.textView25, R.id.progressBar1, R.id.progressBar1_imageview_ok, R.id.progressBar1_imageview_error, dataUploadStatusMessage);
 
+        view.findViewById(R.id.finish_button).setOnClickListener(view1 -> {
+            cleanup();
+            startActivity(new Intent(getActivity(), LobbyActivity.class));
+        });
 
         return view;
     }
@@ -172,7 +178,6 @@ public class FinishReportFragment extends Fragment {
 
     public void dataUpload(String dataName, Map<String, Object> data, int textViewID, int progressBarID, int statusOKImageviewID, int statusErrorImageviewID, Map<String, String> message){
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        //updateStatusTextViewUI(UPDATE_STATUS_LOADING, textViewID, progressBarID, statusOKImageviewID, statusErrorImageviewID, message);
         firestore.collection("report").document(dataName).set(data).addOnSuccessListener(unused -> {
             updateStatusTextViewUI(UPDATE_STATUS_OK, textViewID, progressBarID, statusOKImageviewID, statusErrorImageviewID, message);
         }).addOnFailureListener(e -> {
@@ -208,5 +213,12 @@ public class FinishReportFragment extends Fragment {
                 button.setEnabled(progressBar1.getVisibility() == View.GONE && progressBar2.getVisibility() == View.GONE && progressBar3.getVisibility() == View.GONE);
             });
         }
+    }
+
+    private void cleanup() {
+        SharedPreferences dataPref = getActivity().getSharedPreferences("t4.sers.activity.positivesharedprefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = dataPref.edit();
+        editor.clear();
+        editor.commit();
     }
 }

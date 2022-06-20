@@ -82,11 +82,16 @@ public class HelloReportFragment extends Fragment {
         Button button = view.findViewById(R.id.button3);
 
         button.setOnClickListener(view1 -> {
+
             if(getActivity() != null){
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.report_fragment_container, RapidTestReportFragment.newInstance()).commit();
                 StepView stepView = getActivity().findViewById(R.id.step_view);
                 stepView.go(1, true);
+
+                SharedPreferences.Editor mPreferences = getActivity().getSharedPreferences("t4.sers.activity.positivesharedprefs", MODE_PRIVATE).edit();
+                mPreferences.clear();
+                mPreferences.apply();
             }
         });
 

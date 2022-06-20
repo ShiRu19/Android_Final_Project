@@ -4,10 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28"
         tools:ignore="ScopedStorage" />
+
 
     <application
         android:allowBackup="true"
@@ -16,9 +18,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolEpidemicReportSystem">
-        <activity
-            android:name=".ConfirmReportFragment"
-            android:exported="false" />
 
         <receiver
             android:name=".receiver.WarningReceiver"
@@ -42,13 +41,17 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.ReportActivity"
-            android:label="疫情回報" />
+            android:label="疫情回報"
+            android:parentActivityName=".activity.LobbyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.LobbyActivity" />
+        </activity>
         <activity
             android:name=".activity.LobbyActivity"
             android:label="Lobby Activity" />

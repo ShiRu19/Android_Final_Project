@@ -41,7 +41,7 @@ public class PlaceholderContent {
         for(int i = 0; i < itemText.length; i++){
             Drawable drawable = icon.getDrawable(i);
             int color = colors.getColor(i, R.color.black);
-            PlaceholderContent.addItem(PlaceholderContent.createPlaceholderItem(i, "test " + (i + 1), color, drawable));
+            PlaceholderContent.addItem(PlaceholderContent.createPlaceholderItem(i, itemText[i], color, drawable));
         }
     }
 

@@ -7,11 +7,6 @@
         android:title="@string/person_bottom_navigation_text" />
 
     <item
-        android:id="@+id/debug"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="@string/debug_bottom_navigation_text" />
-
-    <item
         android:id="@+id/school"
         android:icon="@drawable/ic_baseline_school_24"
         android:title="@string/school_bottom_navigation_text" />

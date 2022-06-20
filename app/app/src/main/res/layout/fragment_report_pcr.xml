@@ -218,7 +218,7 @@
                         </LinearLayout>
 
                         <RadioButton
-                            android:id="@+id/Radio_isolation_no"
+                            android:id="@+id/Radio_insulation_no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="否" />

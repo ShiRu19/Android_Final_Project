@@ -81,7 +81,6 @@ public class RapidTestReportFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_report_rapid, container, false);
 
         EditText_rapid_date = view.findViewById(R.id.EditText_rapidAntigenTest_date);
-        ImageButton imgBtn_rapid_date = view.findViewById(R.id.ImageButton_rapidAntigenTest_date);
         Button btn_certification = view.findViewById(R.id.Button_rapidAntigenTest_certification);
         ImgBtn_rapid_certification_delete = view.findViewById(R.id.Button_rapidAntigenTest_certification_delete);
         ImgView_rapid_certification = view.findViewById(R.id.ImageView_rapidAntigenTest_certification);
@@ -93,14 +92,17 @@ public class RapidTestReportFragment extends Fragment {
                 if(data != null && data.getData() != null){
                     selectedImageUri = data.getData();
                     Bitmap selectedImageBitmap = null;
+
                     try {
                         selectedImageBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImageUri);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                     imageCompleted = true;
                     ImgView_rapid_certification.setImageBitmap(selectedImageBitmap);
                     ImgView_rapid_certification.setTag(selectedImageUri.toString());
+
                     checkAllDataCompleted();
                 }
             }
@@ -109,6 +111,17 @@ public class RapidTestReportFragment extends Fragment {
         if(getActivity() != null) {
             String sharedPrefFile = "t4.sers.activity.positivesharedprefs";
             mPreferences = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+
+            EditText_rapid_date.setText(mPreferences.getString(ET_rapid_date, null));
+            dateCompleted = EditText_rapid_date.getText().length() != 0;
+
+            String imageUriString = mPreferences.getString(IV_rapid_certification, "");
+
+            if (!imageUriString.equals("")) {
+                ImgView_rapid_certification.setImageURI(Uri.parse(imageUriString));
+            }
+
+            checkAllDataCompleted();
         }
 
         EditText_rapid_date.addTextChangedListener(new TextWatcher() {

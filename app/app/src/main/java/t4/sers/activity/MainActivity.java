@@ -143,15 +143,18 @@ public class MainActivity extends AppCompatActivity {
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 75, outStream);
                             outStream.close();
                             intent.putExtra("imageURI", temp.getAbsolutePath());
+                            loginPreferenceEditor = loginPreferenceEditor.putString("imageURI", temp.getAbsolutePath());
                         }else{
                             intent.putExtra("imageURI", "");
                         }
 
                         loginPreferenceEditor = loginPreferenceEditor.putBoolean("rememberMe", rememberMe);
                         loginPreferenceEditor = loginPreferenceEditor.putString("studentName", name);
+                        loginPreferenceEditor = loginPreferenceEditor.putString("studentEmail", email);
                         loginPreferenceEditor = loginPreferenceEditor.putString("username", studentID);
                         loginPreferenceEditor = loginPreferenceEditor.putString("password", password);
                         loginPreferenceEditor = loginPreferenceEditor.putString("department", studentDepartment);
+                        loginPreferenceEditor = loginPreferenceEditor.putString("courseDataJson", studentCourseArray.toString());
                         loginPreferenceEditor.commit();
 
                         Alerter.create(MainActivity.this)

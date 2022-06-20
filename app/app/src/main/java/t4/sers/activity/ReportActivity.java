@@ -34,7 +34,13 @@ public class ReportActivity extends AppCompatActivity {
             StepView sv = findViewById(R.id.step_view);
             int tag = (int) sv.getTag();
             Fragment[] fragmentList = {HelloReportFragment.newInstance("", ""), RapidTestReportFragment.newInstance(), PCRReportFragment.newInstance(), ConfirmReportFragment.newInstance()};
-            if(step <= tag && step != list.size()-1){
+            if(tag == list.size() - 1){
+                return;
+            }
+            if(step == 0){
+                return;
+            }
+            if(step <= tag){
                 sv.go(step, true);
                 FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
                 fragmentManager.replace(R.id.report_fragment_container, fragmentList[step]).commit();

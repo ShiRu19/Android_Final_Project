@@ -1,7 +1,6 @@
 package t4.sers.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,23 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import t4.sers.databinding.FragmentSettingBinding;
 import t4.sers.placeholder.PlaceholderContent.PlaceholderItem;
-import t4.sers.util.SwipeRemoveAdapter;
 
-
-public class SettingFragmentRecyclerViewAdapter extends SwipeRemoveAdapter {
-
-    @Override
-    public void remove(int position) {
-        PlaceholderItem placeholderItem = mValues.get(position);
-        mValues.remove(placeholderItem);
-    }
+/**
+ * {@link RecyclerView.Adapter} that can display a {@link PlaceholderItem}.
+ * TODO: Replace the implementation with code for your data type.
+ */
+public class SettingFragmentRecyclerViewAdapter extends RecyclerView.Adapter<SettingFragmentRecyclerViewAdapter.ViewHolder> {
 
     public interface OnItemClickHandler {
         void onItemClick(String text);
@@ -49,12 +43,11 @@ public class SettingFragmentRecyclerViewAdapter extends SwipeRemoveAdapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        SettingFragmentRecyclerViewAdapter.ViewHolder viewHolder = (SettingFragmentRecyclerViewAdapter.ViewHolder) holder;
-        viewHolder.mItem = mValues.get(position);
-        viewHolder.mImageView.setImageDrawable(mValues.get(position).icon);
-        viewHolder.mImageView.setColorFilter(mValues.get(position).color);
-        viewHolder.mContentView.setText(mValues.get(position).content);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.mItem = mValues.get(position);
+        holder.mImageView.setImageDrawable(mValues.get(position).icon);
+        holder.mImageView.setColorFilter(mValues.get(position).color);
+        holder.mContentView.setText(mValues.get(position).content);
     }
 
     @Override
