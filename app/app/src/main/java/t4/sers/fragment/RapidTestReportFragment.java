@@ -78,6 +78,8 @@ public class RapidTestReportFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        System.out.println("Execute!");
+
         View view = inflater.inflate(R.layout.fragment_report_rapid, container, false);
 
         EditText_rapid_date = view.findViewById(R.id.EditText_rapidAntigenTest_date);
@@ -92,18 +94,15 @@ public class RapidTestReportFragment extends Fragment {
                 if(data != null && data.getData() != null){
                     selectedImageUri = data.getData();
                     Bitmap selectedImageBitmap = null;
-
                     try {
                         selectedImageBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImageUri);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                     imageCompleted = true;
                     ImgView_rapid_certification.setImageBitmap(selectedImageBitmap);
                     ImgView_rapid_certification.setTag(selectedImageUri.toString());
-
-                    checkAllDataCompleted();
+                    checkAllDataCompleted(view);
                 }
             }
         });
@@ -119,9 +118,10 @@ public class RapidTestReportFragment extends Fragment {
 
             if (!imageUriString.equals("")) {
                 ImgView_rapid_certification.setImageURI(Uri.parse(imageUriString));
+                ImgView_rapid_certification.setTag(Uri.parse(imageUriString).toString());
             }
 
-            checkAllDataCompleted();
+            checkAllDataCompleted(view);
         }
 
         EditText_rapid_date.addTextChangedListener(new TextWatcher() {
@@ -139,7 +139,7 @@ public class RapidTestReportFragment extends Fragment {
                     dateCompleted = false;
                 }
                 else dateCompleted = EditText_rapid_date.getText().length() != 0;
-                checkAllDataCompleted();
+                checkAllDataCompleted(view);
             }
         });
 
@@ -150,13 +150,13 @@ public class RapidTestReportFragment extends Fragment {
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             activityResultLauncher.launch(intent);
-            checkAllDataCompleted();
+            checkAllDataCompleted(view);
         });
 
         ImgBtn_rapid_certification_delete.setOnClickListener(view14 -> {
             deleteImage();
             imageCompleted = false;
-            checkAllDataCompleted();
+            checkAllDataCompleted(view);
         });
 
         Btn_next.setOnClickListener(view15 -> {
@@ -170,11 +170,23 @@ public class RapidTestReportFragment extends Fragment {
             stepView.go(2, true);
         });
 
+        checkAllDataCompleted(view);
+
         return view;
     }
 
-    private void checkAllDataCompleted() {
-        setBtnEnabled(dateCompleted && imageCompleted);
+    private void checkAllDataCompleted(View view) {
+        EditText_rapid_date = view.findViewById(R.id.EditText_rapidAntigenTest_date);
+        ImgView_rapid_certification = view.findViewById(R.id.ImageView_rapidAntigenTest_certification);
+        boolean flag1 = EditText_rapid_date.getText() != null;
+        boolean flag4 = ImgView_rapid_certification.getTag() != null;
+        if (!flag1 || !flag4){
+            return;
+        }
+        boolean flag2 = EditText_rapid_date.getText().length() != 0;
+        boolean flag3 = ((String) ImgView_rapid_certification.getTag()).length() > 0;
+        System.out.println(flag2 + " " + flag3);
+        setBtnEnabled(flag2 && flag3);
     }
 
     private void setBtnEnabled(boolean enabled) {
@@ -226,7 +238,7 @@ public class RapidTestReportFragment extends Fragment {
     private void saveData() {
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(ET_rapid_date, EditText_rapid_date.getText().toString());
-        editor.putString(IV_rapid_certification, selectedImageUri.toString());
+        editor.putString(IV_rapid_certification, ImgView_rapid_certification.getTag().toString());
         editor.commit();
     }
 }

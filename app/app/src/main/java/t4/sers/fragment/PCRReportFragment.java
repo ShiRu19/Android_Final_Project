@@ -165,6 +165,10 @@ public class PCRReportFragment extends Fragment {
             isNegative = mPreferences.getInt(is_PCR_negative, -1) == 1;
             isUnknown = mPreferences.getInt(is_PCR_unknown, -1) == 1;
 
+            ImgView_pcr_certification.setImageURI(Uri.parse(mPreferences.getString(IV_pcr_certification, "")));
+            ImgView_pcr_certification.setTag(Uri.parse(mPreferences.getString(IV_pcr_certification, "")).toString());
+            ImgView_pcr_certification.setVisibility(View.VISIBLE);
+
             if(isPositive) {
                 RB_pcr_positive.setChecked(true);
                 RB_pcr_negative.setChecked(false);
@@ -325,6 +329,9 @@ public class PCRReportFragment extends Fragment {
         //Btn_next.setOnClickListener(view17 -> {
         //    saveData();
         //});
+
+        nextStatus();
+
         return view;
     }
     //
@@ -495,7 +502,7 @@ public class PCRReportFragment extends Fragment {
         SharedPreferences.Editor editor = mPreferences.edit();
         if(isPositive && isInsulation) {
             editor.putString(ET_positive_date, EditText_positive_date.getText().toString());
-            editor.putString(IV_pcr_certification, selectedImageUri.toString());
+            editor.putString(IV_pcr_certification, ImgView_pcr_certification.getTag().toString());
             editor.putString(ET_isolation_date_start, EditText_isolation_date_start.getText().toString());
             editor.putString(ET_isolation_date_end, EditText_isolation_date_end.getText().toString());
             editor.putInt(is_PCR_positive, 1);
@@ -505,7 +512,7 @@ public class PCRReportFragment extends Fragment {
         }
         else if(isPositive) {
             editor.putString(ET_positive_date, EditText_positive_date.getText().toString());
-            editor.putString(IV_pcr_certification, selectedImageUri.toString());
+            editor.putString(IV_pcr_certification, ImgView_pcr_certification.getTag().toString());
             editor.putString(ET_isolation_date_start, "");
             editor.putString(ET_isolation_date_end, "");
             editor.putInt(is_PCR_positive, 1);
@@ -537,6 +544,16 @@ public class PCRReportFragment extends Fragment {
     private void nextStatus() {
         boolean isOpenNext = false;
 
+        isPositive = RB_pcr_positive.isChecked();
+        isNegative = RB_pcr_negative.isChecked();
+        isUnknown = RB_pcr_unknown.isChecked();
+        isInsulation = RB_insulation_yes.isChecked();
+
+        isDataCorrect_positive_date = EditText_positive_date.getText() != null && EditText_positive_date.getText().length() > 0;
+        isDataCorrect_isolation_date_start = EditText_isolation_date_start.getText() != null && EditText_isolation_date_start.getText().length() > 0;
+        isDataCorrect_isolation_date_end = EditText_isolation_date_end.getText() != null && EditText_isolation_date_end.getText().length() > 0;
+        isDataCorrect_pcr_certification = ImgView_pcr_certification.getTag() != null && ((String) ImgView_pcr_certification.getTag()).length() > 0;
+
         if(isPositive && isInsulation) {
             if(isDataCorrect_positive_date && isDataCorrect_pcr_certification && isDataCorrect_isolation_date_start && isDataCorrect_isolation_date_end) {
                 isOpenNext = true;
@@ -547,7 +564,7 @@ public class PCRReportFragment extends Fragment {
                 isOpenNext = true;
             }
         }
-        else {
+        else if(isNegative || isUnknown) {
             isOpenNext = true;
         }
 

@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
@@ -41,9 +39,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import t4.sers.R;
-import t4.sers.adapter.CourseConfirmTableAdapter;
 import t4.sers.adapter.CourseTableAdapter;
-import t4.sers.adapter.SchoolConfirmTableAdapter;
 import t4.sers.receiver.WarningReceiver;
 import t4.sers.util.ConfirmCourse;
 
@@ -132,7 +128,7 @@ public class PersonalFragment extends Fragment {
         courseTable.setAdapter(new CourseTableAdapter(getContext(), courseCodeList, courseNameList, courseTeacherList));
         courseTable.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.laySwipe);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.laySwipe1);
         swipeRefreshLayout.setOnRefreshListener(this::reloadData);
 
         reloadData();

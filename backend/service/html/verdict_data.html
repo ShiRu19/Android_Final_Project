@@ -12,7 +12,7 @@
     <body>
         <div class="bg-orange-300 overflow-x-hidden w-screen h-screen p-10">
             <div class="relative rounded-md lg:w-[80%] md:w-full h-[100%] bg-white text-center mx-auto overflow-hidden flex-grow p-10">
-                <h2 id="UUID" class="text-4xl text-left py-3"> </h2>
+                <h2 id="documentID" class="text-4xl text-left py-3"> </h2>
                 <h4 id="reportTime" class="text-base text-left py-3"> </h4>
                 <div class="flex flex-row text-left">
                     <div class="w-[50%]">
@@ -24,8 +24,13 @@
                         <p id="IsolateString" class="my-10 text-xl"> </p>
                     </div>
                     <div class="flex flex-col w-[50%] gap-5">
-                        <div class="w-full">
-                            <img id="rapidPositiveImage" class="w-auto object-contain h-[450px] mx-auto">
+                        <div class="w-full flex flex-row gap-5 justify-center">
+                            <div>
+                                <img id="rapidPositiveImage" class="w-auto object-contain h-[450px] mx-auto">
+                            </div>
+                            <div>
+                                <img id="pcrPositiveImage" class="w-auto object-contain h-[450px] mx-auto">
+                            </div>
                         </div>
                         <div class="w-full">
                             <button id="verdict_ok" class="w-full p-5 rounded-lg bg-blue-500 text-white my-3 text-xl hover:bg-blue-400 hover:transition-all hover:duration-300"> 審核為確診個案 </button>
@@ -111,9 +116,10 @@
 
         function execute_image(storage, param){
 
-            var storageRef = storage.refFromURL('gs://t4-sers-296c0.appspot.com/' + param + '.jpg');
+            var storageRef_rapid = storage.refFromURL('gs://t4-sers-296c0.appspot.com/' + param + '_rapid.png');
+            var storageRef_pcr = storage.refFromURL('gs://t4-sers-296c0.appspot.com/' + param + '_pcr.png');
 
-            storageRef.getDownloadURL().then((url) => {
+            storageRef_rapid.getDownloadURL().then((url) => {
                 // `url` is the download URL for 'images/stars.jpg'
 
                 // This can be downloaded directly:
@@ -133,6 +139,26 @@
                 console.log(error)
             });
 
+            storageRef_pcr.getDownloadURL().then((url) => {
+                // `url` is the download URL for 'images/stars.jpg'
+
+                // This can be downloaded directly:
+                var xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.onload = (event) => {
+                var blob = xhr.response;
+                };
+                xhr.open('GET', url);
+                xhr.send();
+
+                // Or inserted into an <img> element
+                var img = document.getElementById('pcrPositiveImage');
+                img.setAttribute('src', url);
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+
         }
 
         function execute_text(db, param){
@@ -143,23 +169,20 @@
 
                 let date = new Date(doc.data()["ReportTime"].seconds * 1000)
                 let rapidDate = new Date(doc.data()["RapidTestDate"].seconds * 1000)
-                let onsetDate = new Date(doc.data()["OnsetDate"].seconds * 1000)
                 let PCRDate = new Date(doc.data()["PCRResultDate"].seconds * 1000)
                 let isolateDate = new Date(doc.data()["IsolateDate"].seconds * 1000)
 				
 				rapidTestDate = doc.data()["RapidTestDate"].seconds * 1000
 
                 let rapidDateString = rapidDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
-                let onsetDateString = onsetDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
                 let PCRDateString = doc.data()["PCRResult"] ? PCRDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }) : "無 PCR 檢驗結果"
                 let isolateDateString = doc.data()["Isolate"] ? isolateDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' }) : "無居隔書"
 
-                document.getElementById("UUID").innerText = doc.data()["UUID"]
+                document.getElementById("documentID").innerText = doc.data()["documentID"]
                 document.getElementById("reportTime").innerText = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
                 document.getElementById("studentID").innerText = "學號：" + doc.data()["StudentID"]
                 document.getElementById("studentName").innerText = "學生姓名：" + doc.data()["StudentName"]
                 document.getElementById("RapidDateString").innerText = "回報快篩陽日期：" + rapidDateString.substring(0, rapidDateString.indexOf(" "))
-                document.getElementById("OnsetDateString").innerText = "回報發病日期：" + onsetDateString.substring(0, onsetDateString.indexOf(" "))
                 document.getElementById("PCRDateString").innerText = "回報 PCR 陽日期：" + (doc.data()["PCRResult"] ? PCRDateString.substring(0, PCRDateString.indexOf(" ")) : PCRDateString)
                 document.getElementById("IsolateString").innerText = "回報居隔結束日期：" + (doc.data()["Isolate"] ? isolateDateString.substring(0, isolateDateString.indexOf(" ")) : isolateDateString)
             

@@ -122,7 +122,7 @@ public class FinishReportFragment extends Fragment {
         map.put("AdministratorSeen", false);
         map.put("AdministratorVerdict", 0);
         map.put("Isolate", dataPref.getInt(is_PCR_isolation, 0) != 0);
-        map.put("PCRResult", dataPref.getInt(is_PCR_unknown, 0) != 0);
+        map.put("PCRResult", dataPref.getInt(is_PCR_unknown, 0) != 1);
         map.put("ReportTime", Timestamp.now());
         map.put("StudentDepartment", loginPref.getString("department", ""));
         map.put("StudentID", studentID);

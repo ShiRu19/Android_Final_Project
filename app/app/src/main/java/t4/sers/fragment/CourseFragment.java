@@ -7,11 +7,11 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -27,19 +27,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import t4.sers.R;
 import t4.sers.adapter.CourseConfirmTableAdapter;
-import t4.sers.adapter.CourseTableAdapter;
-import t4.sers.adapter.SchoolConfirmTableAdapter;
 import t4.sers.util.ConfirmCourse;
 
 /**
@@ -58,6 +53,7 @@ public class CourseFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ExecutorService mExecutor = Executors.newSingleThreadExecutor();
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public CourseFragment() {
         // Required empty public constructor
@@ -90,9 +86,21 @@ public class CourseFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_course, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.laySwipe2);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            swipeRefreshLayout.setRefreshing(false);
+            reloadData();
+        });
+        reloadData();
+        return view;
+    }
+
+    public void reloadData(){
         Runnable runnable = () -> {
             try {
                 String confirmCaseURL = getString(R.string.confirm_course_URL);
@@ -142,6 +150,5 @@ public class CourseFragment extends Fragment {
             }
         };
         mExecutor.execute(runnable);
-        return inflater.inflate(R.layout.fragment_course, container, false);
     }
 }

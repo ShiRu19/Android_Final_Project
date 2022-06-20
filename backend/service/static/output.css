@@ -630,6 +630,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: auto;
 }
 
+.my-5 {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
 .my-10 {
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
@@ -638,11 +643,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
-}
-
-.my-5 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
 }
 
 .mb-10 {
@@ -783,10 +783,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   height: calc(100% - 0.25rem);
 }
 
-.h-\[20\%\] {
-  height: 20%;
-}
-
 .w-screen {
   width: 100vw;
 }
@@ -799,12 +795,12 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100%;
 }
 
-.w-auto {
-  width: auto;
-}
-
 .w-\[70\%\] {
   width: 70%;
+}
+
+.w-auto {
+  width: auto;
 }
 
 .flex-shrink {
@@ -1713,9 +1709,19 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(249 115 22 / var(--tw-bg-opacity));
 }
 
+.bg-slate-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.bg-yellow-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 240 138 / var(--tw-bg-opacity));
 }
 
 .bg-red-500 {
@@ -1726,21 +1732,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-\[rgb\(255\2c 0\2c 0\)\] {
   --tw-bg-opacity: 1;
   background-color: rgb(255 0 0 / var(--tw-bg-opacity));
-}
-
-.bg-slate-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
-}
-
-.bg-orange-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 215 170 / var(--tw-bg-opacity));
-}
-
-.bg-yellow-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 240 138 / var(--tw-bg-opacity));
 }
 
 .bg-\[url\(\'\.\.\.\'\)\] {
@@ -1970,14 +1961,24 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-family: "some font",sans-serif;
 }
 
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-9xl {
+  font-size: 8rem;
+  line-height: 1;
 }
 
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .text-4xl {
@@ -1988,16 +1989,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
-.text-9xl {
-  font-size: 8rem;
-  line-height: 1;
 }
 
 .font-bold {
@@ -2460,14 +2451,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-red-400:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-yellow-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(254 249 195 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-red-400:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 113 113 / var(--tw-bg-opacity));
 }
 
 .hover\:font-bold:hover {

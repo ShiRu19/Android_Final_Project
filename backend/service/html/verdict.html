@@ -96,7 +96,7 @@
 
             db.collection("report").orderBy("ReportTime", "asc").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    fetch_data[doc.data()["UUID"]] = doc.data()
+                    fetch_data[doc.data()["documentID"]] = doc.data()
                     addTableRow(count+1, doc.data());
                     count += 1;
                 });
@@ -111,30 +111,30 @@
             let ID_td = document.createElement("td")
             ID_td.innerText = index
             ID_td.setAttribute("class", "px-6 py-4 z-10")
-            ID_td.setAttribute("value", data["UUID"])
+            ID_td.setAttribute("value", data["documentID"])
 
             let UUID_td = document.createElement("td")
-            UUID_td.innerText = data["UUID"]
+            UUID_td.innerText = data["documentID"]
             UUID_td.setAttribute("class", "px-6 py-4 z-10")
-            UUID_td.setAttribute("value", data["UUID"])
+            UUID_td.setAttribute("value", data["documentID"])
 
             let date = new Date(data["ReportTime"].seconds * 1000)
 
             let reportTime_td = document.createElement("td")
             reportTime_td.innerText = date.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
             reportTime_td.setAttribute("class", "px-6 py-4 z-10")
-            reportTime_td.setAttribute("value", data["UUID"])
+            reportTime_td.setAttribute("value", data["documentID"])
 
             let studetnID_td = document.createElement("td")
             studetnID_td.innerText = data["StudentID"]
             studetnID_td.setAttribute("class", "px-6 py-4 z-10")
-            studetnID_td.setAttribute("value", data["UUID"])
+            studetnID_td.setAttribute("value", data["documentID"])
 
 
             let studentName_td = document.createElement("td")
             studentName_td.innerText = data["StudentName"]
             studentName_td.setAttribute("class", "px-6 py-4 z-10")
-            studentName_td.setAttribute("value", data["UUID"])
+            studentName_td.setAttribute("value", data["documentID"])
             
 
             let verdict_td = document.createElement("td")
@@ -160,9 +160,9 @@
 
             verdict_td.innerText = status
             verdict_td.setAttribute("class", "px-6 py-4 z-10")
-            verdict_td.setAttribute("value", data["UUID"])
+            verdict_td.setAttribute("value", data["documentID"])
 
-            tr.setAttribute("value", data["UUID"])
+            tr.setAttribute("value", data["documentID"])
             tr.appendChild(ID_td)
             tr.appendChild(UUID_td)
             tr.appendChild(reportTime_td)
@@ -171,8 +171,8 @@
             tr.appendChild(verdict_td)
 
             tr.addEventListener("click", (e) => {
-                console.log(fetch_data[data["UUID"]])
-                window.location.href = "/admin_verdict?id=" + fetch_data[data["UUID"]]["UUID"]
+                console.log(fetch_data[data["documentID"]])
+                window.location.href = "/admin_verdict?id=" + fetch_data[data["documentID"]]["documentID"]
             })
 
             document.getElementsByTagName("table")[0].appendChild(tr)

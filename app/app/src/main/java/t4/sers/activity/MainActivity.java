@@ -186,6 +186,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (IOException e){
                 e.printStackTrace();
+                Alerter.create(MainActivity.this)
+                        .setBackgroundColorRes(R.color.red_500)
+                        .setTitle("登入超時！")
+                        .setText(Objects.requireNonNull(e.getMessage()))
+                        .show();
             } catch (AuthFailedException e){
                 Alerter.create(MainActivity.this)
                         .setBackgroundColorRes(R.color.red_500)

@@ -10,24 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.os.Looper;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -35,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -103,7 +95,7 @@ public class SchoolFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_school, container, false);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.laySwipe);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.laySwipe3);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             reloadData();
             swipeRefreshLayout.setRefreshing(false);
