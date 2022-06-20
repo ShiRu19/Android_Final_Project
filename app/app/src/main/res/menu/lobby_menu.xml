@@ -6,6 +6,8 @@
     <item
         android:id="@+id/action_report"
         android:title="疫情通報" />
+
+    <!--
     <item
         android:id="@+id/action_notification_rapid"
         android:orderInCategory="100"
@@ -26,5 +28,6 @@
         android:orderInCategory="100"
         android:title="@string/lobby_menu_other_footprints"
         app:showAsAction="never" />
+    -->
 
 </menu>
