@@ -38,6 +38,7 @@ def _sign_in(custom_token, api_key):
 def test_custom_token(api_key):
     custom_token = auth.create_custom_token('user1')
     id_token = _sign_in(custom_token, api_key)
+    time.sleep(1)
     claims = auth.verify_id_token(id_token)
     assert claims['uid'] == 'user1'
 
@@ -224,6 +225,6 @@ def getConfirmCourse():
     return Response(json.dumps(response_data), mimetype="application/json")
 
 if __name__ == "__main__":
-    test_custom_token("AIzaSyBUJBnbG2uyzHtTo0gWNHuNocfUMuXqxkU")
     print(pytz.timezone('Asia/Taipei').localize(datetime.now()).replace(hour=0, minute=0, second=0, microsecond=0))
+    test_custom_token("AIzaSyBUJBnbG2uyzHtTo0gWNHuNocfUMuXqxkU")
     app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))

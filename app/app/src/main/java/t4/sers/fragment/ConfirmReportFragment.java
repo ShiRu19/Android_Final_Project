@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.shuhart.stepview.StepView;
 
 import java.io.IOException;
 
@@ -71,6 +74,8 @@ public class ConfirmReportFragment extends Fragment {
         LinearLayout LinearLayout_PCR_unknown = view.findViewById(R.id.linearLayout_pcr_unknown);
         LinearLayout LinearLayout_isolation_yes = view.findViewById(R.id.LinearLayout_pcr_isolation_yes);
         LinearLayout LinearLayout_isolation_no = view.findViewById(R.id.LinearLayout_pcr_isolation_no);
+
+        Button button_next_view = view.findViewById(R.id.Button_next_confirm);
 
         String sharedPrefFile = "t4.sers.activity.positivesharedprefs";
         SharedPreferences mPreferences;
@@ -133,6 +138,17 @@ public class ConfirmReportFragment extends Fragment {
                 LinearLayout_PCR_negative.setVisibility(View.GONE);
                 LinearLayout_PCR_unknown.setVisibility(View.VISIBLE);
             }
+
+            button_next_view.setOnClickListener(view1 -> {
+                if(getActivity() != null) {
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.report_fragment_container, FinishReportFragment.newInstance()).commit();
+
+                    StepView stepView = getActivity().findViewById(R.id.step_view);
+                    stepView.setTag(Math.max((int) stepView.getTag(), 4));
+                    stepView.go(4, true);
+                }
+            });
         }
 
         return view;

@@ -266,6 +266,7 @@ public class PCRReportFragment extends Fragment {
             fragmentTransaction.replace(R.id.report_fragment_container, ConfirmReportFragment.newInstance()).commit();
 
             StepView stepView = getActivity().findViewById(R.id.step_view);
+            stepView.setTag(Math.max((int) stepView.getTag(), 3));
             stepView.go(3, true);
         });
 

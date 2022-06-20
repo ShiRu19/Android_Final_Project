@@ -44,6 +44,9 @@ def fetchCourseData(username, password, studentID, year, sem):
         course_list = []
         table = soup.html.find_all("table")[1].findChildren("tr")
 
+        studentInfo = table[0].findChildren("td")[0].contents[0]
+        studentDepartment = studentInfo.split("　　")[2].split("：")[1]
+
         for i in range(3, len(table)-1):
             tag = [7, 1, 2, 3, 4, 5, 6]
             courseCode = table[i].findChildren("td")[0].findChildren("a")[0].contents[0]
@@ -59,7 +62,7 @@ def fetchCourseData(username, password, studentID, year, sem):
                     for data in classTimeSplit:
                         course_list[len(course_list)-1]["courseTime"].append(str(tag[j]) + "-" + data)
 
-        return {"status": "OK", "data": course_list}
+        return {"status": "OK", "data": course_list, "studentDepartment": studentDepartment}
 
     except Exception as e:
         return {"status": "Error", "Message": traceback.format_exc()}

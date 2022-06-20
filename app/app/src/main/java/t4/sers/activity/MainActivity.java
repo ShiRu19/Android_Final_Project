@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         String firebaseToken = data.get("firebaseToken").getAsString();
                         JsonObject studentCourseObject = data.get("studentCourse").getAsJsonObject();
                         JsonArray studentCourseArray = studentCourseObject.get("data").getAsJsonArray();
+                        String studentDepartment = studentCourseObject.get("studentDepartment").getAsString();
 
                         intent.putExtra("firebaseToken", firebaseToken);
                         intent.putExtra("studentName", name);
@@ -146,12 +147,12 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("imageURI", "");
                         }
 
-                        if(rememberMe){
-                            loginPreferenceEditor = loginPreferenceEditor.putBoolean("rememberMe", true);
-                            loginPreferenceEditor = loginPreferenceEditor.putString("username", studentID);
-                            loginPreferenceEditor = loginPreferenceEditor.putString("password", password);
-                            loginPreferenceEditor.commit();
-                        }
+                        loginPreferenceEditor = loginPreferenceEditor.putBoolean("rememberMe", rememberMe);
+                        loginPreferenceEditor = loginPreferenceEditor.putString("studentName", name);
+                        loginPreferenceEditor = loginPreferenceEditor.putString("username", studentID);
+                        loginPreferenceEditor = loginPreferenceEditor.putString("password", password);
+                        loginPreferenceEditor = loginPreferenceEditor.putString("department", studentDepartment);
+                        loginPreferenceEditor.commit();
 
                         Alerter.create(MainActivity.this)
                                 .setTitle("正在登入 Firebase...")

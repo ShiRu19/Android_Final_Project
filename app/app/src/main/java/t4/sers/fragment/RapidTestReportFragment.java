@@ -153,6 +153,7 @@ public class RapidTestReportFragment extends Fragment {
             fragmentTransaction.replace(R.id.report_fragment_container, PCRReportFragment.newInstance()).commit();
 
             StepView stepView = getActivity().findViewById(R.id.step_view);
+            stepView.setTag(Math.max((int) stepView.getTag(), 2));
             stepView.go(2, true);
         });
 

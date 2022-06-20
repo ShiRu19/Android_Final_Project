@@ -24,6 +24,7 @@
             android:name=".receiver.WarningReceiver"
             android:enabled="true"
             android:exported="true" />
+
         <receiver
             android:name=".receiver.UploadReceiver"
             android:enabled="true"

@@ -5,18 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import t4.sers.fragment.FinishReportFragment;
+import t4.sers.receiver.UploadReceiver;
 
 public class FirebaseUpload {
 
@@ -25,15 +18,18 @@ public class FirebaseUpload {
         StorageReference reference = storage.getReference(imageName);
         reference.putFile(uri).addOnProgressListener(snapshot -> {
             Log.d("FirebaseStorage", "Uploading");
-            Intent broadcast = new Intent("FirebaseUpload").putExtra("status", "pending");
+            Intent broadcast = new Intent(activity, FinishReportFragment.class).putExtra("status", "pending");
+            broadcast.setAction("FirebaseUpbroadcastload");
             activity.sendBroadcast(broadcast);
         }).addOnSuccessListener(taskSnapshot -> {
             Log.d("FirebaseStorage", "Upload Success");
-            Intent broadcast = new Intent("FirebaseUpload").putExtra("status", "OK");
+            Intent broadcast = new Intent(activity, FinishReportFragment.class).putExtra("status", "OK");
+            broadcast.setAction("FirebaseUpload");
             activity.sendBroadcast(broadcast);
         }).addOnFailureListener(e -> {
             Log.d("FirebaseStorage", "Upload Failed");
-            Intent broadcast = new Intent("FirebaseUpload").putExtra("status", "Failed");
+            Intent broadcast = new Intent(activity, FinishReportFragment.class).putExtra("status", "Failed");
+            broadcast.setAction("FirebaseUpload");
             activity.sendBroadcast(broadcast);
         });
     }
