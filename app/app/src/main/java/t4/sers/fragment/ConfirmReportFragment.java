@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.shuhart.stepview.StepView;
 
 import java.io.IOException;
 
@@ -41,6 +44,10 @@ public class ConfirmReportFragment extends Fragment {
     private static final String is_PCR_negative = "Is PCR negative";
     private static final String is_PCR_unknown = "Is PCR unknown";
     private static final String is_PCR_isolation = "Is PCR isolation";
+
+    private Button uploadButton;
+
+    SharedPreferences mPreferences;
 
     public ConfirmReportFragment() {
         // Required empty public constructor
@@ -72,8 +79,9 @@ public class ConfirmReportFragment extends Fragment {
         LinearLayout LinearLayout_isolation_yes = view.findViewById(R.id.LinearLayout_pcr_isolation_yes);
         LinearLayout LinearLayout_isolation_no = view.findViewById(R.id.LinearLayout_pcr_isolation_no);
 
+        uploadButton = view.findViewById(R.id.Button_next_confirm);
+
         String sharedPrefFile = "t4.sers.activity.positivesharedprefs";
-        SharedPreferences mPreferences;
 
         if(getActivity() != null) {
             mPreferences = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
@@ -135,6 +143,23 @@ public class ConfirmReportFragment extends Fragment {
             }
         }
 
+        uploadButton.setOnClickListener(view15 -> {
+            uploadFirebase();
+            /*
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.report_fragment_container, PCRReportFragment.newInstance()).commit();
+
+            StepView stepView = getActivity().findViewById(R.id.step_view);
+            stepView.go(2, true);
+             */
+        });
+
         return view;
+    }
+
+    private void uploadFirebase() {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.clear();
+        editor.commit();
     }
 }

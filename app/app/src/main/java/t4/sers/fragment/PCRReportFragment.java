@@ -47,6 +47,9 @@ public class PCRReportFragment extends Fragment {
     private LinearLayout LinearLayout_pcr_positive;
     private LinearLayout LinearLayout_insulation_yes;
     private RadioGroup RG_pcr;
+    private RadioButton RB_pcr_positive;
+    private RadioButton RB_pcr_negative;
+    private RadioButton RB_pcr_unknown;
 
     private EditText EditText_positive_date;
     private ImageButton ImgBtn_pcr_date;
@@ -57,6 +60,7 @@ public class PCRReportFragment extends Fragment {
 
     private RadioGroup RG_isolation;
     private RadioButton RB_insulation_yes;
+    private RadioButton RB_insulation_no;
     private EditText EditText_isolation_date_start;
     private EditText EditText_isolation_date_end;
 
@@ -117,7 +121,7 @@ public class PCRReportFragment extends Fragment {
                     ImgView_pcr_certification.setImageBitmap(selectedImageBitmap);
                     ImgView_pcr_certification.setTag(selectedImageUri.toString());
                     ImgView_pcr_certification.setVisibility(View.VISIBLE);
-                    saveData();
+                    nextStatus();
                 }
             }
         });
@@ -137,6 +141,9 @@ public class PCRReportFragment extends Fragment {
         LinearLayout_insulation_yes = view.findViewById(R.id.LinearLayout_insulation_yes);
 
         RG_pcr = view.findViewById(R.id.RadioGroup_pcr);
+        RB_pcr_positive = view.findViewById(R.id.Radio_pcr_positive);
+        RB_pcr_negative = view.findViewById(R.id.Radio_pcr_negative);
+        RB_pcr_unknown = view.findViewById(R.id.Radio_pcr_unknown);
 
         EditText_positive_date = view.findViewById(R.id.EditText_PCR_date);
         ImgBtn_pcr_date = view.findViewById(R.id.ImageButton_PCR_date);
@@ -146,6 +153,7 @@ public class PCRReportFragment extends Fragment {
 
         RG_isolation = view.findViewById(R.id.RadioGroup_insulation);
         RB_insulation_yes = view.findViewById(R.id.Radio_insulation_yes);
+        RB_insulation_no = view.findViewById(R.id.Radio_insulation_no);
         EditText_isolation_date_start = view.findViewById(R.id.EditText_insulation_startDate);
         EditText_isolation_date_end = view.findViewById(R.id.EditText_insulation_endDate);
 
@@ -153,6 +161,50 @@ public class PCRReportFragment extends Fragment {
 
         if(getActivity() != null) {
             mPreferences = getActivity().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+            isPositive = mPreferences.getInt(is_PCR_positive, -1) == 1;
+            isNegative = mPreferences.getInt(is_PCR_negative, -1) == 1;
+            isUnknown = mPreferences.getInt(is_PCR_unknown, -1) == 1;
+
+            if(isPositive) {
+                RB_pcr_positive.setChecked(true);
+                RB_pcr_negative.setChecked(false);
+                RB_pcr_unknown.setChecked(false);
+                LinearLayout_pcr_positive.setVisibility(View.VISIBLE);
+
+                EditText_positive_date.setText(mPreferences.getString(ET_positive_date, null));
+                isDataCorrect_positive_date = EditText_positive_date.getText().length() != 0;
+
+                isInsulation = mPreferences.getInt(is_PCR_isolation, -1) == 1;
+                if(isInsulation) {
+                    RB_insulation_yes.setChecked(true);
+                    RB_insulation_no.setChecked(false);
+                    LinearLayout_insulation_yes.setVisibility(View.VISIBLE);
+                    EditText_isolation_date_start.setText(mPreferences.getString(ET_isolation_date_start, null));
+                    EditText_isolation_date_end.setText(mPreferences.getString(ET_isolation_date_end, null));
+                    isDataCorrect_isolation_date_start = EditText_isolation_date_start.getText().length() != 0;
+                    isDataCorrect_isolation_date_end = EditText_isolation_date_end.getText().length() != 0;
+                }
+                else {
+                    RB_insulation_yes.setChecked(false);
+                    RB_insulation_no.setChecked(true);
+                    LinearLayout_insulation_yes.setVisibility(View.GONE);
+                }
+            }
+            else if(isNegative) {
+                LinearLayout_pcr_positive.setVisibility(View.GONE);
+                LinearLayout_insulation_yes.setVisibility(View.GONE);
+                RB_pcr_positive.setChecked(false);
+                RB_pcr_negative.setChecked(true);
+                RB_pcr_unknown.setChecked(false);
+            }
+            else if(isUnknown) {
+                LinearLayout_pcr_positive.setVisibility(View.GONE);
+                LinearLayout_insulation_yes.setVisibility(View.GONE);
+                RB_pcr_positive.setChecked(false);
+                RB_pcr_negative.setChecked(false);
+                RB_pcr_unknown.setChecked(true);
+            }
+            nextStatus();
         }
 
         RG_pcr.setOnCheckedChangeListener((radioGroup, checkID) -> {
