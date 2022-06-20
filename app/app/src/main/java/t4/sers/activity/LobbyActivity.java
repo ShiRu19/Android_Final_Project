@@ -117,6 +117,7 @@ public class LobbyActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        /*
         if (id == R.id.action_notification_rapid) {
             Intent intent = new Intent(this, StudentNotificationActivity_rapid.class);
             startActivity(intent);
@@ -137,7 +138,8 @@ public class LobbyActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-        else if (id == R.id.action_report){
+        */
+        if (id == R.id.action_report){
             Intent reportIntent = new Intent(this, ReportActivity.class);
             startActivity(reportIntent);
             return true;
