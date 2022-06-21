@@ -97,7 +97,7 @@ public class WarningReceiver extends BroadcastReceiver {
                     DateTime isolateTime = confirmCourse.getRiskDurationEnd();
                     DateTime liftTime = new DateTime(sharedPreferences.getLong("liftTime", 0L));
                     System.out.println(isolateTime + " " + liftTime);
-                    if(courseCode.contains(code) && isolateTime.isAfter(liftTime)){
+                    if(courseCode.contains(code) && dateTime.isAfter(liftTime)){
                         deliverWarningNotification(context);
                         trigger = true;
                     }

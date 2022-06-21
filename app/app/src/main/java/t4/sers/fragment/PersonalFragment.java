@@ -167,7 +167,7 @@ public class PersonalFragment extends Fragment {
                             DateTime dateTime = confirmCourse.getRiskDurationStart();
                             DateTime isolateTime = confirmCourse.getRiskDurationEnd();
                             DateTime liftTime = new DateTime(sharedPreferences.getLong("liftTime", 0L));
-                            if(courseCodeList.contains(code) && isolateTime.isAfter(liftTime)){
+                            if(courseCodeList.contains(code) && dateTime.isAfter(liftTime)){
                                 TextView title = getActivity().findViewById(R.id.textView3);
                                 TextView subTitle = getActivity().findViewById(R.id.textView4);
                                 title.setText("與確診者資料比對有接觸");
